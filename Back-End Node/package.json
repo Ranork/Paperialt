@@ -1,5 +1,29 @@
 {
   "dependencies": {
+    "express": "^4.17.3",
+    "pg": "^8.7.3",
     "server": "^1.0.37"
-  }
+  },
+  "name": "back-end-node",
+  "version": "1.0.0",
+  "description": "Paperialt Back End Node",
+  "main": "run.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ranork/Paperialt.git"
+  },
+  "keywords": [
+    "paper",
+    "trade",
+    "back-end"
+  ],
+  "author": "Akatron Network",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ranork/Paperialt/issues"
+  },
+  "homepage": "https://github.com/Ranork/Paperialt#readme"
 }
