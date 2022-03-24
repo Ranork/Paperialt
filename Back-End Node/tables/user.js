@@ -1,7 +1,8 @@
 const con = require('../library/connection')
+const tbl_def = require('../library/table_definitions')
 
 const getUsers = (request, response) => {
-  con.pool.query('SELECT * FROM tbl_user ORDER BY username ASC', (error, results) => {
+  con.pool.query(tbl_def.tables['user'].CSelectAll(), (error, results) => {
     if (error) {
       throw error
     }
@@ -12,7 +13,7 @@ const getUsers = (request, response) => {
 const getUserById = (request, response) => {
   const id = request.params.id;
 
-  con.pool.query('SELECT * FROM tbl_usera WHERE username = $1', [id], (error, results) => {
+  con.pool.query(tbl_def.tables['user'].CSelectAll("*", "username = '" + id + "'"), (error, results) => {
     if (error) {
       response.status(500).json({
         "Success": false,
@@ -23,6 +24,7 @@ const getUserById = (request, response) => {
     response.status(200).json(results.rows[0])
   })
 }
+
 
 module.exports = {
   getUsers,
