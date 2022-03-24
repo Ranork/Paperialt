@@ -1,5 +1,5 @@
-const con = require('../library/connection')
-const tbl_def = require('../library/table_definitions')
+const con = require('../../library/connection')
+const tbl_def = require('./definitions')
 
 module.exports = {
   fGET,

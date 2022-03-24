@@ -1,5 +1,5 @@
 const con = require('../library/connection')
-const tbl_def = require('../library/table_definitions')
+const tbl_def = require('../library/table/definitions')
 
 const getUsers = (request, response) => {
   con.pool.query(tbl_def.tables['user'].CSelectAll(), (error, results) => {

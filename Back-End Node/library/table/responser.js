@@ -1,10 +1,12 @@
-const con = require('../library/connection')
-const tbl_def = require('../library/table_definitions')
-const tbl_fu = require('../library/table_functions')
+const con = require('../connection')
+const tbl_def = require('../../library/table/definitions')
+const tbl_fu = require('../../library/table//functions')
+const req_log = require('../../library/request_logger')
 
 module.exports = {
   getTableFuncs,
-  integrateApp
+  integrateApp,
+  tablefuncs
 }
 
 
@@ -23,13 +25,13 @@ function getTableFuncs() {
 
     // Definition GET Function
     var defGET = (req, res) => { tbl_fu.fDGET(table, req, res) }
-    
+
     // POST Function
     var fPOST = (req, res) => { tbl_fu.fPOST(table, req, res) }
-    
+
     // PUT Function
     var fPUT = (req, res) => { tbl_fu.fPUT(table, req, res) }
-    
+
     // DELETE Function
     var fDELETE = (req, res) => { tbl_fu.fDELETE(table, req, res) }
 
@@ -46,21 +48,29 @@ function getTableFuncs() {
   return tablefuncs;
 }
 
+var tablefuncs = getTableFuncs();
+
 function integrateApp(app) {
-  var tablefuncs = getTableFuncs();
+  tablefuncs = getTableFuncs();
   for (var ti in tablefuncs) {
     var tblName = ti;
     var tblFuncs = tablefuncs[ti];
     var url = "/" + tblName;
 
-    app.get(url, tblFuncs['GET']);
-    app.get(url + '/:id', tblFuncs['sinGET']);
-    app.get('/defi' + url, tblFuncs['defGET']);
-    app.post(url, tblFuncs['POST']);
-    app.put(url, tblFuncs['PUT']);
-    app.delete(url, tblFuncs['DELETE']);
+    app.get(url, req_log.logRequest, tblFuncs['GET']);
+    app.get(url + '/:id', req_log.logRequest, tblFuncs['sinGET']);
+    app.get('/defi' + url, req_log.logRequest, tblFuncs['defGET']);
+    app.post(url, req_log.logRequest, tblFuncs['POST']);
+    app.put(url, req_log.logRequest, tblFuncs['PUT']);
+    app.delete(url, req_log.logRequest, tblFuncs['DELETE']);
   }
 
+  app.get('/', (request, response) => {
+    response.json({
+      info: 'Akatron Network Back-End Node',
+      tables: Object.keys(tablefuncs)
+    });
+  })
   console.log("Tables fetched successfully: " + Object.keys(tablefuncs).join(", "))
 
 }

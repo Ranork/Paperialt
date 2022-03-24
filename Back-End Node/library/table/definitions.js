@@ -1,4 +1,4 @@
-const con = require('../library/connection')
+const con = require('../connection')
 
 class Table {
   constructor(name, primary_key, permission) {
