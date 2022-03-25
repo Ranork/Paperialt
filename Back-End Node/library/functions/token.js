@@ -4,7 +4,11 @@ const con = require('../connection')
 const stgs = require('../settings')
 const fun_cnstr = require('./constructor')
 
-function createToken(username, permLevel) {
+const tblUser = stgs.tableModules['user'];
+
+function createToken(userdata) {
+
+  var username = userdata['username'];
 
   for (var n in stgs.authTokens) {
     if (stgs.authTokens[n]['username'] === username) {
@@ -16,9 +20,10 @@ function createToken(username, permLevel) {
 
   stgs.authTokens[token] = {
     "token": token,
-    "username": username,
-    "permLevel": permLevel
+    ...userdata
   }
+
+  console.log(stgs.authTokens[token]);
 
   return token;
 }
@@ -34,9 +39,8 @@ function fGET(req, res) {
 
   var username = qu['username'];
   var password = qu['password'];
-  var tblUser = stgs.tableModules['user'];
 
-  sql = tblUser.CSelectOne(username, "password, permlevel");
+  sql = tblUser.CSelectOne(username);
   con.pool.query(sql, (error, results) => {
     if (error) { return false; }
 
@@ -46,12 +50,13 @@ function fGET(req, res) {
     }
 
     var permLevel = results.rows[0]['permlevel'];
+    var token = createToken(results.rows[0]);
 
     return res.status(200).json({
       "Success": true,
       "username": username,
       "permLevel": permLevel,
-      "token": createToken(username, permLevel)
+      "token": token
     });
 
   })
@@ -81,7 +86,6 @@ function fDELETE(req, res) {
 const functionModule = {
   "url": "token",
   "name": "token",
-  "permLevel": 0,
   "functions": {
     "GET": {
       "function": fGET,
@@ -95,12 +99,12 @@ const functionModule = {
   "help": {
     "GET": {
       "info": "Get a new token with username and password.",
-      "params": ["username", "password"],
+      "params": ["username*", "password*"],
       "returns": ["username", "permLevel", "token"]
     },
     "DELETE": {
       "info": "Dispose a token from server.",
-      "params": ["token"],
+      "params": ["token*"],
       "returns": ["info"]
     }
   }

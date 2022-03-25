@@ -15,7 +15,7 @@ function integrateApp(app) {
   var mods = [];
 
   for (var f in stgs.functions) {
-    var fun = stgs.functions[f];
+    const fun = stgs.functions[f];
     mods.push(fun['name'])
 
     for (var fkey in fun['functions']) {

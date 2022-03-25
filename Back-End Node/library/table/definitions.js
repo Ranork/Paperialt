@@ -52,7 +52,7 @@ class Table {
         sql += " OFFSET " + query.offset.toString();
       }
     }
-
+    
     return sql;
   }
 
@@ -78,6 +78,7 @@ class Table {
 
     for (var key in values) {
       var val = values[key];
+      if (val === undefined) { continue; }
 
       if (key === "password") { val = val.hashStr(); }
 
@@ -102,6 +103,7 @@ class Table {
 
     for (var key in query.values) {
       var val = query.values[key];
+      if (val === undefined) { continue; }
 
       if (key === "password") { val = val.hashStr(); }
 
