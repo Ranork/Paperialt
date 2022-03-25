@@ -1,12 +1,11 @@
 const con = require('../connection')
 const tbl_def = require('../../library/table/definitions')
 const tbl_fu = require('../../library/table//functions')
-const req_log = require('../../library/request_logger')
+const req_log = require('../middleware/request_logger')
 
 module.exports = {
   getTableFuncs,
-  integrateApp,
-  tablefuncs
+  integrateApp
 }
 
 
@@ -55,11 +54,11 @@ function integrateApp(app) {
   for (var ti in tablefuncs) {
     var tblName = ti;
     var tblFuncs = tablefuncs[ti];
-    var url = "/" + tblName;
+    var url = "/table/" + tblName;
 
     app.get(url, req_log.logRequest, tblFuncs['GET']);
     app.get(url + '/:id', req_log.logRequest, tblFuncs['sinGET']);
-    app.get('/defi' + url, req_log.logRequest, tblFuncs['defGET']);
+    app.get("/table/defi/" + tblName, req_log.logRequest, tblFuncs['defGET']);
     app.post(url, req_log.logRequest, tblFuncs['POST']);
     app.put(url, req_log.logRequest, tblFuncs['PUT']);
     app.delete(url, req_log.logRequest, tblFuncs['DELETE']);
@@ -67,7 +66,8 @@ function integrateApp(app) {
 
   app.get('/', (request, response) => {
     response.json({
-      info: 'Akatron Network Back-End Node',
+      info: 'Paperialt Back-End Node',
+      owner: 'Akatron Network',
       tables: Object.keys(tablefuncs)
     });
   })

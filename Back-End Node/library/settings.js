@@ -12,16 +12,16 @@ const psql = {
   port: 5432,
 }
 
-const cors = [
-  ctx => header("Access-Control-Allow-Origin", "*"),
-  ctx => header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept"),
-  ctx => header("Access-Control-Allow-Methods", "GET, PUT, PATCH, POST, DELETE, HEAD"),
-  ctx => ctx.method.toLowerCase() === 'options' ? 200 : false
-];
+const securityKey = "&h8=/+&Ne)S)YbCvrG),3X2%G-CxGH";
+
+const functionModules = [
+                          "token"
+                        ];
 
 module.exports = {
   ip,
   port,
-  cors,
-  psql
+  psql,
+  securityKey,
+  functionModules
 };

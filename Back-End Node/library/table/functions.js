@@ -33,32 +33,22 @@ function fSGET(table, req, res) {
 
 function fDGET(table, req, res) {
   con.pool.query("SELECT COUNT(*) FROM " + table.name, (error, results) => {
-    if (error) { console.error("Table Construct Error in " + table.name + ": " + error); return undefined; }
-    else { 
+    if (error) { return tbl_def.declareError(res, error); }
+    else {
 
-      var size = results.rows[0]['count']; 
+      var size = results.rows[0]['count'];
       var ans = {
         "Success": true,
         "PrimaryKey": table.primary_key,
         "RowCount": size,
         "Fields": table.fields
       };
-      
+
       console.log(ans);
       return res.status(200).json(ans)
 
     }
   })
-  
-
-
-  // var size = 0;
-  // con.pool.query(table.CSize(), (error, result) => { size = parseInt(result.rows[0]['count']); })
-
-  // con.pool.query(sql, (error, results) => {
-  //   if (error) { return tbl_def.declareError(res, error); }
-  //   else { return tbl_def.declareGet(res, qu, results.fields, results, {"PrimaryKey": table.primary_key, "Size": size}) }
-  // })
 }
 
 function fPOST(table, req, res) {
@@ -75,8 +65,6 @@ function fPOST(table, req, res) {
     if (error) { return tbl_def.declareError(res, error); }
     else { return tbl_def.declareGet(res, {}, bdy, results) }
   })
-
-  
 }
 
 function fPUT(table, req, res) {
@@ -90,7 +78,7 @@ function fPUT(table, req, res) {
   if (err !== "") {
     return res.status(406).json({"Success": false, "Error": err});
   }
-  
+
   con.pool.query(table.CUpdate(qu), (error, results) => {
     if (error) { return tbl_def.declareError(res, error); }
     else { return tbl_def.declareGet(res, {}, qu, results) }

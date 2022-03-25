@@ -5,6 +5,7 @@ module.exports = {
 function logRequest(req, res, next) {
   var date = (new Date()).stringer();
   console.info("[" + date + "] " + req.method + " " + req.originalUrl);
+
   next()
 }
 

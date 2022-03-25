@@ -1,11 +1,13 @@
 const con = require('../connection')
+const cryp = require('crypto');
+const hsh = require('../hash')
 
 class Table {
-  constructor(name, primary_key, permission) {
+  constructor(name, primary_key, permlevel) {
 
     this.name = name;
     this.primary_key = primary_key;
-    this.permission = permission;
+    this.permlevel = permlevel;
 
     con.pool.query("SELECT * FROM " + name, (error, results) => {
       if (error) { return console.error("Table Construct Error in " + name + ": " + error); }
@@ -36,7 +38,7 @@ class Table {
     else {
       sql += "*";
     }
-    
+
     sql += " FROM " + this.name;
 
     if (query.conditions !== undefined) {
@@ -51,12 +53,10 @@ class Table {
         sql += " OFFSET " + query.offset.toString();
       }
     }
-
     return sql;
   }
 
   CSelectOne(primaryValue, columns) {
-    
     var cols = "*";
     if (columns !== undefined) {
       cols = columns;
@@ -64,7 +64,11 @@ class Table {
 
     var cond = this.primary_key + " = '" + primaryValue + "'";
 
-    return this.CSelectAll(cols, cond);
+    return this.CSelectAll({
+      "columns": cols,
+      "conditions": cond,
+      "limit": 1
+    });
   }
 
   CInsert(values) {
@@ -74,6 +78,9 @@ class Table {
 
     for (var key in values) {
       var val = values[key];
+
+      if (key === "password") { val = val.hashStr(); }
+
       cols.push(key);
       vals.push("'" + val + "'");
     }
@@ -95,7 +102,9 @@ class Table {
 
     for (var key in query.values) {
       var val = query.values[key];
-      
+
+      if (key === "password") { val = val.hashStr(); }
+
       vals.push(key + " = '" + val + "'");
     }
 
@@ -137,7 +146,7 @@ function declareGet(res, query, rows, results, extra) {
 
 
 const tables = {
-  "user": new Table("tbl_user", "username", "user")
+  "user": new Table("tbl_user", "username", 100)
 }
 
 module.exports = {
