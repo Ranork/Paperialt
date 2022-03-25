@@ -2,6 +2,8 @@ const con = require('../connection')
 const tbl_def = require('../../library/table/definitions')
 const tbl_fu = require('../../library/table//functions')
 const req_log = require('../middleware/request_logger')
+const mid_const = require('../middleware/constructor').midWare
+const stgs = require('../settings')
 
 module.exports = {
   getTableFuncs,
@@ -13,8 +15,8 @@ function getTableFuncs() {
   var tablefuncs = {}
 
   // Do this for all tables
-  for (var tb in tbl_def.tables) {
-    var table = tbl_def.tables[tb]
+  for (var tb in stgs.tableModules) {
+    const table = Object.assign(Object.create(Object.getPrototypeOf(stgs.tableModules[tb])), stgs.tableModules[tb])
 
     // General GET Function
     var genGET = (req, res) => { tbl_fu.fGET(table, req, res) }
@@ -50,18 +52,18 @@ function getTableFuncs() {
 var tablefuncs = getTableFuncs();
 
 function integrateApp(app) {
-  tablefuncs = getTableFuncs();
+
   for (var ti in tablefuncs) {
     var tblName = ti;
     var tblFuncs = tablefuncs[ti];
     var url = "/table/" + tblName;
 
-    app.get(url, req_log.logRequest, tblFuncs['GET']);
-    app.get(url + '/:id', req_log.logRequest, tblFuncs['sinGET']);
-    app.get("/table/defi/" + tblName, req_log.logRequest, tblFuncs['defGET']);
-    app.post(url, req_log.logRequest, tblFuncs['POST']);
-    app.put(url, req_log.logRequest, tblFuncs['PUT']);
-    app.delete(url, req_log.logRequest, tblFuncs['DELETE']);
+    app.get(url, mid_const, tblFuncs['GET']);
+    app.get(url + '/:id', mid_const, tblFuncs['sinGET']);
+    app.get("/table/defi/" + tblName, mid_const, tblFuncs['defGET']);
+    app.post(url, mid_const, tblFuncs['POST']);
+    app.put(url, mid_const, tblFuncs['PUT']);
+    app.delete(url, mid_const, tblFuncs['DELETE']);
   }
 
   app.get('/', (request, response) => {

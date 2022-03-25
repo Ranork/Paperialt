@@ -1,13 +1,12 @@
 const con = require('../connection')
-const cryp = require('crypto');
-const hsh = require('../hash')
+const stgs = require('../settings')
 
 class Table {
-  constructor(name, primary_key, permlevel) {
+  constructor(name, primary_key, perms) {
 
     this.name = name;
     this.primary_key = primary_key;
-    this.permlevel = permlevel;
+    this.perms = perms;
 
     con.pool.query("SELECT * FROM " + name, (error, results) => {
       if (error) { return console.error("Table Construct Error in " + name + ": " + error); }
@@ -53,6 +52,7 @@ class Table {
         sql += " OFFSET " + query.offset.toString();
       }
     }
+
     return sql;
   }
 
@@ -145,12 +145,13 @@ function declareGet(res, query, rows, results, extra) {
 }
 
 
-const tables = {
-  "user": new Table("tbl_user", "username", 100)
+stgs.tableModules = {
+  "user": new Table("tbl_user", "username", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
+  "wallet": new Table("tbl_wallet", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100})
 }
 
 module.exports = {
-  tables,
+  Table,
   declareError,
   declareGet
 }

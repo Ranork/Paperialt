@@ -4,6 +4,8 @@ const fs = require("fs");
 const stgs = require('./library/settings')
 const tbl_resp = require('./library/table/responser')
 const fun_cnstr = require('./library/functions/constructor')
+const con = require('./library/connection')
+const tbl_def = require('./library/table/definitions')
 
 
 const app = express();
@@ -11,6 +13,7 @@ const router = express.Router()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true, }))
+
 
 tbl_resp.integrateApp(app);
 fun_cnstr.integrateApp(app);

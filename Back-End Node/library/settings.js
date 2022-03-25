@@ -14,14 +14,20 @@ const psql = {
 
 const securityKey = "&h8=/+&Ne)S)YbCvrG),3X2%G-CxGH";
 
-const functionModules = [
-                          "token"
-                        ];
+const functionModules = ["token"];
+const functions = [];
+
+const tableModules = {};
+
+let authTokens = {};
 
 module.exports = {
   ip,
   port,
   psql,
   securityKey,
-  functionModules
+  functionModules,
+  functions,
+  authTokens,
+  tableModules
 };

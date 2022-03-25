@@ -1,12 +1,20 @@
+const stgs = require('../settings')
+
 module.exports = {
   logRequest,
 }
 
 function logRequest(req, res, next) {
   var date = (new Date()).stringer();
-  console.info("[" + date + "] " + req.method + " " + req.originalUrl);
 
-  next()
+  var username = "";
+  if (stgs.authTokens[req.get('Token')] !== undefined) {
+    username = stgs.authTokens[req.get('Token')]['username'];
+  }
+
+  console.info("[" + date + "] [" + username + "] " + req.method + " " + req.originalUrl);
+
+  return true;
 }
 
 
