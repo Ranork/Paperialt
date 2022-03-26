@@ -149,7 +149,8 @@ function declareGet(res, query, rows, results, extra) {
 
 stgs.tableModules = {
   "user": new Table("tbl_user", "username", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
-  "wallet": new Table("tbl_wallet", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100})
+  "wallet": new Table("tbl_wallet", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
+  "order": new Table("tbl_order", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
 }
 
 module.exports = {
