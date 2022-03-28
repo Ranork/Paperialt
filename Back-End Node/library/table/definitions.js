@@ -52,7 +52,7 @@ class Table {
         sql += " OFFSET " + query.offset.toString();
       }
     }
-    
+    console.log(sql);
     return sql;
   }
 
@@ -151,6 +151,11 @@ stgs.tableModules = {
   "user": new Table("tbl_user", "username", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
   "wallet": new Table("tbl_wallet", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
   "order": new Table("tbl_order", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
+  "position": new Table("tbl_position", "id", {"GET": 0, "POST": 100, "PUT": 100, "DELETE": 100}),
+}
+
+stgs.viewModules = {
+  "orderunited": new Table("v_orderunited", "id", {"GET": 0, "POST": 999, "PUT": 999, "DELETE": 999}),
 }
 
 module.exports = {

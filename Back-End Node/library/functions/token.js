@@ -1,8 +1,6 @@
-const tbl_def = require('../table/definitions')
 const hsh = require('../hash')
 const con = require('../connection')
 const stgs = require('../settings')
-const fun_cnstr = require('./constructor')
 
 const tblUser = stgs.tableModules['user'];
 
@@ -112,4 +110,4 @@ const functionModule = {
 
 module.exports = {
   functionModule
-}
+};

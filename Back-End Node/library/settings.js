@@ -14,10 +14,11 @@ const psql = {
 
 const securityKey = "&h8=/+&Ne)S)YbCvrG),3X2%G-CxGH";
 
-const functionModules = ["token", "wallet"];
+const functionModules = ["token", "wallet", "order"];
 const functions = [];
 
 const tableModules = {};
+const viewModules = {};
 
 let authTokens = {
   'PaperialToken_admin': {
@@ -42,5 +43,6 @@ module.exports = {
   functionModules,
   functions,
   authTokens,
-  tableModules
+  tableModules,
+  viewModules
 };
