@@ -42,6 +42,8 @@ function fGET(req, res) {
   con.pool.query(sql, (error, results) => {
     if (error) { return false; }
 
+    if (results.rows.length === 0) {return res.status(406).json({"Success": false, "Error": "user not found in the system"})}
+
     passfromdb = results.rows[0]['password'];
     if (!password.hashEqual(passfromdb)) {
       return res.status(406).json({"Success": false, "Error": "password not match with user"});
@@ -65,10 +67,11 @@ function fDELETE(req, res) {
   var qu = req.query;
 
   var err = "";
-  if (!qu.hasOwnProperty('token')) {err = "token not found in parameters.";}
+  console.log(qu);
+  if (!qu.hasOwnProperty('Token')) {err = "token not found in parameters.";}
   if (err !== "") { return res.status(406).json({"Success": false, "Error": err}); }
 
-  var token = qu['token'];
+  var token = qu['Token'];
 
   if (!stgs.authTokens.hasOwnProperty(token)) {
     return res.status(200).json({"Success": false, "info": "Token not found in system."});

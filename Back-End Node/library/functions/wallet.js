@@ -36,6 +36,8 @@ function fPOST(req, res) {
       "createdate": (new Date()).stringer()
     }
 
+    console.log(values);
+
     con.pool.query(tblwal.CInsert(values), (error, results) => {
       if (error) { return res.status(500).json({"Success": false, "Error": error}) }
 

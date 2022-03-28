@@ -40,7 +40,7 @@ class Table {
 
     sql += " FROM " + this.name;
 
-    if (query.conditions !== undefined) {
+    if (query.conditions !== undefined && query.conditions.length > 0) {
       sql += " WHERE " + query.conditions;
     }
     if (query.order !== undefined) {
@@ -52,7 +52,6 @@ class Table {
         sql += " OFFSET " + query.offset.toString();
       }
     }
-    console.log(sql);
     return sql;
   }
 
@@ -90,11 +89,12 @@ class Table {
     var colstr = " (" + cols.join(", ") + ")";
 
     var sql = "INSERT INTO " + this.name + colstr + " VALUES" + valstr
-
+    console.log(sql);
     return sql;
   }
 
   CDelete(query) {
+    console.log("DELETE FROM " + this.name + " WHERE " +  query.conditions);
     return "DELETE FROM " + this.name + " WHERE " +  query.conditions
   }
 

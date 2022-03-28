@@ -14,9 +14,13 @@ function integrateApp(app) {
 
   var mods = [];
 
+  var logstr = "Functions fetched successfully: ";
+
   for (var f in stgs.functions) {
     const fun = stgs.functions[f];
     mods.push(fun['name'])
+
+    logstr += fun['name'] + " [" + Object.keys(fun['functions']).join(" ") + "], "
 
     for (var fkey in fun['functions']) {
       var funct = fun['functions'][fkey]['function'];
@@ -41,7 +45,7 @@ function integrateApp(app) {
 
   }
 
-  console.log("Functions fetched successfully: " + mods.join(", "));
+  console.log(logstr);
 
 }
 

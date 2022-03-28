@@ -1,0 +1,1280 @@
+{
+	"info": {
+		"_postman_id": "a747acb1-9e0b-4198-a047-e154ee136f46",
+		"name": "Paperialt",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Tables",
+			"item": [
+				{
+					"name": "USER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:919/table/user",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "919",
+							"path": [
+								"table",
+								"user"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/table/user",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"table",
+										"user"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "508"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"1fc-otDHfK/iruXJtxXCtBe6kljmZDg\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Mar 2022 21:52:36 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Success\": true,\n    \"RowCount\": 2,\n    \"Data\": [\n        {\n            \"username\": \"ranork2\",\n            \"password\": \"111\",\n            \"permlevel\": 0,\n            \"lastlogindate\": \"2022-03-22T21:00:00.000Z\",\n            \"lastloginip\": \"127.0.0.1\",\n            \"registerdate\": \"2022-03-21T21:00:00.000Z\",\n            \"registerip\": \"127.0.0.1\",\n            \"maxwallet\": 2,\n            \"maxposition\": 5\n        },\n        {\n            \"username\": \"ranork\",\n            \"password\": \"41d24f766f9cc9b781c6b7f32ddd6287\",\n            \"permlevel\": 100,\n            \"lastlogindate\": \"2022-03-23T21:00:00.000Z\",\n            \"lastloginip\": \"127.0.0.1\",\n            \"registerdate\": \"2022-03-22T21:00:00.000Z\",\n            \"registerip\": \"127.0.0.1\",\n            \"maxwallet\": 2,\n            \"maxposition\": 5\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "WALLET",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:919/table/wallet",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "919",
+							"path": [
+								"table",
+								"wallet"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/table/wallet",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"table",
+										"wallet"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "197"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"c5-ogGHCuaiNivegawQ6iK78LsY0zE\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Mar 2022 21:52:52 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Success\": true,\n    \"RowCount\": 1,\n    \"Data\": [\n        {\n            \"id\": \"9\",\n            \"name\": \"Unnamed Wallet\",\n            \"username\": \"ranork\",\n            \"startbalance\": 150.25,\n            \"currentbalance\": 150.25,\n            \"isprivate\": false,\n            \"createdate\": \"2022-03-25T23:10:14.000Z\"\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "ORDER",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:919/table/order",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "919",
+							"path": [
+								"table",
+								"order"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/table/order",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"table",
+										"order"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "235"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"eb-R37XecLvuUyioItMBkoaeeq5jyQ\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Mar 2022 21:53:45 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Success\": true,\n    \"RowCount\": 1,\n    \"Data\": [\n        {\n            \"id\": 2,\n            \"wallet\": 9,\n            \"position\": 1,\n            \"type\": \"LIMIT\",\n            \"symbol\": \"TSLA\",\n            \"targetprice\": 30,\n            \"amount\": 5,\n            \"startdate\": \"2022-03-27T12:04:53.000Z\",\n            \"finishdate\": null,\n            \"active\": true,\n            \"explanation\": null,\n            \"endtype\": null\n        }\n    ]\n}"
+						}
+					]
+				},
+				{
+					"name": "POSITION",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "127.0.0.1:919/table/position",
+							"host": [
+								"127",
+								"0",
+								"0",
+								"1"
+							],
+							"port": "919",
+							"path": [
+								"table",
+								"position"
+							]
+						}
+					},
+					"response": [
+						{
+							"name": "Example",
+							"originalRequest": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/table/position",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"table",
+										"position"
+									]
+								}
+							},
+							"status": "OK",
+							"code": 200,
+							"_postman_previewlanguage": "json",
+							"header": [
+								{
+									"key": "X-Powered-By",
+									"value": "Express"
+								},
+								{
+									"key": "Content-Type",
+									"value": "application/json; charset=utf-8"
+								},
+								{
+									"key": "Content-Length",
+									"value": "224"
+								},
+								{
+									"key": "ETag",
+									"value": "W/\"e0-0TXoZZ3ZBDcmbBpr8UcR0tAbnfk\""
+								},
+								{
+									"key": "Date",
+									"value": "Mon, 28 Mar 2022 21:54:15 GMT"
+								},
+								{
+									"key": "Connection",
+									"value": "keep-alive"
+								},
+								{
+									"key": "Keep-Alive",
+									"value": "timeout=5"
+								}
+							],
+							"cookie": [],
+							"body": "{\n    \"Success\": true,\n    \"RowCount\": 1,\n    \"Data\": [\n        {\n            \"id\": 1,\n            \"walletid\": 9,\n            \"type\": \"LONG\",\n            \"startorder\": 0,\n            \"endorder\": 0,\n            \"market\": \"NASDAQ\",\n            \"symbol\": \"TSLA\",\n            \"totalusd\": 100,\n            \"totalstock\": 5,\n            \"createdate\": \"2022-03-27T12:03:32.000Z\",\n            \"isprivate\": false\n        }\n    ]\n}"
+						}
+					]
+				}
+			]
+		},
+		{
+			"name": "Functions",
+			"item": [
+				{
+					"name": "Token",
+					"item": [
+						{
+							"name": "TOKEN",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/function/token?username=ranork&password=123",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"token"
+									],
+									"query": [
+										{
+											"key": "username",
+											"value": "ranork"
+										},
+										{
+											"key": "password",
+											"value": "123"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Exmaple",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:919/function/token?username=ranork&password=123",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"token"
+											],
+											"query": [
+												{
+													"key": "username",
+													"value": "ranork"
+												},
+												{
+													"key": "password",
+													"value": "123"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "127"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"7f-jKoz0FEDI5lnJkIQmdLZKvNDmTc\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 21:55:31 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"username\": \"ranork\",\n    \"permLevel\": 100,\n    \"token\": \"PaperialToken_XyZL2ME7cBDmLj719QT1WycZbXqt4KQsU2zwZUNDj0A4HuRpnD\"\n}"
+								}
+							]
+						},
+						{
+							"name": "TOKEN",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/function/token?Token=PaperialToken_ug7DYMWL2zBX2WfMi0goQtfRfqH8LAup4uMWkU3wS7ZrtSuokX",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"token"
+									],
+									"query": [
+										{
+											"key": "Token",
+											"value": "PaperialToken_ug7DYMWL2zBX2WfMi0goQtfRfqH8LAup4uMWkU3wS7ZrtSuokX"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:919/function/token?Token=PaperialToken_ug7DYMWL2zBX2WfMi0goQtfRfqH8LAup4uMWkU3wS7ZrtSuokX",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"token"
+											],
+											"query": [
+												{
+													"key": "Token",
+													"value": "PaperialToken_ug7DYMWL2zBX2WfMi0goQtfRfqH8LAup4uMWkU3wS7ZrtSuokX"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "61"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"3d-jaYGIBviYiEZVbtx/Ema6/SAySA\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 21:58:49 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"info\": \"Token has been removed from system.\"\n}"
+								}
+							]
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					]
+				},
+				{
+					"name": "Wallet",
+					"item": [
+						{
+							"name": "WALLET",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/function/wallet?order=id ASC",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"wallet"
+									],
+									"query": [
+										{
+											"key": "order",
+											"value": "id ASC"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:919/function/wallet",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"wallet"
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "208"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"d0-6UxuqQvMbGTti9bG/EFFcjWIAeY\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:00:01 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"RowCount\": 1,\n    \"Query\": {},\n    \"Data\": [\n        {\n            \"id\": \"9\",\n            \"name\": \"Unnamed Wallet\",\n            \"username\": \"ranork\",\n            \"startbalance\": 150.25,\n            \"currentbalance\": 150.25,\n            \"isprivate\": false,\n            \"createdate\": \"2022-03-25T23:10:14.000Z\"\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "WALLET",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"Test\",\r\n    \"startbalance\": 1000,\r\n    \"isprivate\": false\r\n}"
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/wallet/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"wallet",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"name\": \"Test\",\r\n    \"startbalance\": 1000,\r\n    \"isprivate\": false\r\n}"
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/wallet/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"wallet",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "169"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"a9-0Ne0WseCAxEYk8o77wWPzRgBygQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:35:40 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"Data\": {\n        \"id\": \"13\",\n        \"name\": \"Test\",\n        \"username\": \"ranork\",\n        \"startbalance\": 1000,\n        \"currentbalance\": 1000,\n        \"isprivate\": false,\n        \"createdate\": \"2022-03-28T22:35:39.000Z\"\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "WALLET",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 13,\r\n    \"name\": \"Test Rename\",\r\n    \"isprivate\": true,\r\n    \"startbalance\": 2000\r\n}"
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/wallet/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"wallet",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "PUT",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 13,\r\n    \"name\": \"Test Rename\",\r\n    \"isprivate\": true,\r\n    \"startbalance\": 2000\r\n}"
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/wallet/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"wallet",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "120"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"78-MS2lwcbQo4mAMNkSU+sts5wO4a8\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:37:15 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"wallet_id\": 13,\n    \"Data\": {\n        \"name\": \"Test Rename\",\n        \"startbalance\": 2000,\n        \"currentbalance\": 2000,\n        \"isprivate\": true\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "WALLET",
+							"protocolProfileBehavior": {
+								"disabledSystemHeaders": {
+									"content-type": true
+								}
+							},
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 13\r\n}"
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/wallet/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"wallet",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 13\r\n}"
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/wallet/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"wallet",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "31"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"1f-MTAcfEVGKVnLtfSbjV/PLh9eSpQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:39:54 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"wallet_id\": 13\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Order",
+					"item": [
+						{
+							"name": "ORDER",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/function/order/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"order",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:919/function/order/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"order",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "285"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11d-GsWKskEWTq1n8yeQkXN7k1pBMhc\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:40:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"RowCount\": 1,\n    \"Data\": [\n        {\n            \"username\": \"ranork\",\n            \"walletname\": \"Unnamed Wallet\",\n            \"id\": 2,\n            \"wallet\": 9,\n            \"position\": 1,\n            \"type\": \"LIMIT\",\n            \"symbol\": \"TSLA\",\n            \"targetprice\": 30,\n            \"amount\": 5,\n            \"startdate\": \"2022-03-27T12:04:53.000Z\",\n            \"finishdate\": null,\n            \"active\": true,\n            \"explanation\": null,\n            \"endtype\": null\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "ORDER",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"wallet\": 9,\r\n    \"position\": 1,\r\n    \"type\": \"LIMIT\",\r\n    \"symbol\": \"TSLA\",\r\n    \"targetprice\": 12.34,\r\n    \"amount\": 12.54,\r\n    \"explanation\": \"TEST ORDER\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/order/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"order",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"wallet\": 9,\r\n    \"position\": 1,\r\n    \"type\": \"LIMIT\",\r\n    \"symbol\": \"TSLA\",\r\n    \"targetprice\": 12.34,\r\n    \"amount\": 12.54,\r\n    \"explanation\": \"TEST ORDER\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/order/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"order",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "16"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"10-foaDisAQOmEN5f3bQmwvHr6wHkI\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:45:06 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true\n}"
+								}
+							]
+						},
+						{
+							"name": "ORDER",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 5\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/order/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"order",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/order/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"order",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "16"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"10-foaDisAQOmEN5f3bQmwvHr6wHkI\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:48:05 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true\n}"
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "PaperialToken_admin",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Token",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

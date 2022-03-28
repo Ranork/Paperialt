@@ -3,7 +3,9 @@
     "crypto": "^1.0.1",
     "express": "^4.17.3",
     "pg": "^8.7.3",
-    "server": "^1.0.37"
+    "save": "^2.4.0",
+    "server": "^1.0.37",
+    "yahoo-finance": "^0.3.7"
   },
   "name": "back-end-node",
   "version": "1.0.0",

@@ -68,9 +68,11 @@ function integrateApp(app) {
 
   app.get('/', (request, response) => {
     response.json({
-      info: 'Paperialt Back-End Node',
-      owner: 'Akatron Network',
-      tables: Object.keys(tablefuncs)
+      Info: 'Paperialt Back-End Node',
+      Owner: 'Akatron Network',
+      Table_Modules: Object.keys(tablefuncs),
+      View_Modules: Object.keys(stgs.viewModules),
+      Function_Modules: stgs.functionModules
     });
   })
   console.log("Tables fetched successfully: " + Object.keys(tablefuncs).join(", "))
