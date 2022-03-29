@@ -1,10 +1,18 @@
 const yahooFinance = require('yahoo-finance');
 
-yahooFinance.quote({
-  symbol: 'BTCUSDT',
-  modules: [ 'price', 'summaryDetail' ] // see the docs for the full list
-}, function (err, quotes) {
-  console.log(quotes);
+
+
+async function getQuote(symbol) {
+  const res = await yahooFinance.quote(symbol);
+  console.log(res);
+}
+
+getQuote('TSLA');
+
+
+
+
+
 
   // {
   //   summaryDetail: {
@@ -93,5 +101,3 @@ yahooFinance.quote({
   //     marketCap: 2865686642688
   //   }
   // }
-
-});
