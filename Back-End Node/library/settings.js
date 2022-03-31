@@ -12,6 +12,8 @@ const psql = {
   port: 5432,
 }
 
+const psqlstr = "postgresql://ranork:zctaz22xc@45.200.120.138:5432/paperialt";
+
 const securityKey = "&h8=/+&Ne)S)YbCvrG),3X2%G-CxGH";
 
 const functionModules = ["token", "wallet", "order"];
@@ -39,6 +41,7 @@ module.exports = {
   ip,
   port,
   psql,
+  psqlstr,
   securityKey,
   functionModules,
   functions,

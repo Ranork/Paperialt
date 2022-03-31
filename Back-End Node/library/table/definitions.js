@@ -112,6 +112,18 @@ class Table {
 
     return "UPDATE " + this.name + " SET " + vals.join(", ") + " WHERE " + query.conditions
   }
+
+  SQSelectAll(query) { return con.pgcl_sync.querySync(this.CSelectAll(query)); }
+
+  SQSelectOne(primaryValue, columns) {
+    var ans = con.pgcl_sync.querySync(this.CSelectOne(primaryValue, columns));
+    if (ans.length > 0) { return ans[0];}
+    else { return {}; }
+  }
+
+  SQDelete(query) { return con.pgcl_sync.querySync(this.CDelete(query)); }
+
+  SQUpdate(query) { return con.pgcl_sync.querySync(this.CUpdate(query)); }
 }
 
 
@@ -155,7 +167,9 @@ stgs.tableModules = {
 }
 
 stgs.viewModules = {
+  "walletunited": new Table("v_walletunited", "id", {"GET": 0, "POST": 999, "PUT": 999, "DELETE": 999}),
   "orderunited": new Table("v_orderunited", "id", {"GET": 0, "POST": 999, "PUT": 999, "DELETE": 999}),
+  "positionunited": new Table("v_positionunited", "id", {"GET": 0, "POST": 999, "PUT": 999, "DELETE": 999}),
 }
 
 module.exports = {

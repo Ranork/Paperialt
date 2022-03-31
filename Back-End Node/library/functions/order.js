@@ -45,8 +45,10 @@ function fPOST(req, res) {
   var token = req.get('Token');
   var userdata = stgs.authTokens[token];
 
+  // control all amount decreaser orders if this order chan change the position amount to subzero then block request
+
   var reqfields = [
-    "wallet", "position", "type", "symbol", "targetprice", "amount"
+    "wallet", "position", "type", "symbol", "targetprice", "amount", "bs"
   ];
 
   for (var ri in reqfields) {
@@ -141,7 +143,7 @@ const functionModule = {
     },
     "POST": {
       "info": "Create a new order",
-      "params": ["*wallet", "*position", "*type: LIMIT, MARKET, TAKEPROFIT, STOPLOSS", "*symbol", "*targetprice", "*amount", "explanation"],
+      "params": ["*wallet", "*position", "*type: LIMIT, MARKET, TAKEPROFIT, STOPLOSS", "*symbol", "*targetprice", "*amount", "explanation", "*bs: BUY, SELL"],
       "returns": ["info"]
     },
     "DELETE": {
