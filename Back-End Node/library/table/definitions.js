@@ -89,7 +89,7 @@ class Table {
     var colstr = " (" + cols.join(", ") + ")";
 
     var sql = "INSERT INTO " + this.name + colstr + " VALUES" + valstr
-    console.log(sql);
+    
     return sql;
   }
 

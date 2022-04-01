@@ -7,6 +7,22 @@ const tblOrder = stgs.tableModules.order;
 const tblPos = stgs.tableModules.position;
 const tblWallet = stgs.tableModules.wallet;
 
+var lastControl = new Date();
+
+async function mainController() {
+  controlOrders();
+  while (true) {
+    var now = new Date();
+    if (Math.abs(now - lastControl) >= stgs.orderControlInterval) {
+      lastControl = now;
+      controlOrders();
+    }
+    await sleep(100);
+  }
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
 async function controlOrders() {
   var sql = tblOrder.CSelectAll({
     "conditions": "active = true"
@@ -18,26 +34,23 @@ async function controlOrders() {
     if (error) { console.log(error) }
 
     activeOrders = results.rows;
-    console.log(activeOrders);
+    console.log("[" + (new Date()).stringer() + "] Order controller. Active Order Count: " + results.rowCount);
 
     for (var oi in activeOrders) {
-      var order = activeOrders[oi];
+      const order = activeOrders[oi];
 
       yahooFinance.quote({ symbol: order.symbol, modules: ['price'] }, function(err, quote) {
-
-        var stprices = {
+        
+        const stprices = {
           market: quote.price.regularMarketPrice,
           high: quote.price.regularMarketDayHigh,
           low: quote.price.regularMarketDayLow
         }
-
-        console.log(stprices);
-
         const tPrice = order.targetprice;
 
         if (order.bs === 'BUY' && stprices.market <= tPrice) {
           // BUY MODE
-          console.log("[ORD " + order.id +"] Buy Order Triggered. Type: " + order.type + 
+          console.log("[ORD " + order.id + " POS " + order.position + "] Buy Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
                       " TargetPrice: " + order.targetprice +
                       " MarketPrice: " + stprices.market);
@@ -45,7 +58,7 @@ async function controlOrders() {
         }
         else if (order.bs === 'SELL' && stprices.market >= tPrice) {
           // SELL MODE
-          console.log("[ORD " + order.id +"] Sell Order Triggered. Type: " + order.type + 
+          console.log("[ORD " + order.id + " POS " + order.position + "] Sell Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
                       " TargetPrice: " + order.targetprice +
                       " MarketPrice: " + stprices.market);
@@ -78,15 +91,13 @@ async function triggerOrder(orderid, stockprices) {
     // DECREASE BALANCES
 
     switch (pos.type) {
-      case "SHORT": newWalBalance +=  posAvgUsd - occuredPayment; break;
-      case "LONG": newWalBalance += occuredPayment - posAvgUsd; break;
+      case "SHORT": newWalBalance +=  (posAvgUsd - stockprices.market) * order.amount; break;
+      case "LONG": newWalBalance += (stockprices.market - posAvgUsd) * order.amount; break;
     }
 
     occuredAmount = -1 * occuredAmount;
     occuredPayment = -1 * occuredPayment;
   }
-
-  // position total usd is goin wrong
   
   var posUpQu = {
     "conditions": "id = '" + pos.id + "'",
@@ -103,15 +114,12 @@ async function triggerOrder(orderid, stockprices) {
     }
   }
 
-  console.log(posUpQu);
-  console.log(walUpQu);
-
   tblPos.SQUpdate(posUpQu);
   tblWallet.SQUpdate(walUpQu);
 
   if (posUpQu.values.totalstock <= 0) {
     console.log("[POS " + pos.id + "] Completed. PnL: " + (newWalBalance - wallet.currentbalance).toFixed(4));
-    deactivatePosition(pos.id);
+    deactivatePosition(pos.id, (newWalBalance - wallet.currentbalance));
   }
 
 }
@@ -129,23 +137,24 @@ async function deactivateOrder(orderid) {
   tblOrder.SQUpdate(qu);
 }
 
-async function deactivatePosition(posid) {
-  const orders = tblOrder.SQSelectAll({"conditions": "position = '" + posid + "'"});
+async function deactivatePosition(posid, pnl) {
+  const orders = tblOrder.SQSelectAll({"conditions": "position = '" + posid + "' AND active = true"});
   for (var oid in orders) {
     var order = orders[oid];
     var upqu = {
       "conditions": "id = '" + order.id + "'",
-      "values": { "active": 'false' }
+      "values": { "active": 'false', "endtype": "CANCELLED", "finishdate": (new Date()).stringer(), }
     }
     tblOrder.SQUpdate(upqu);
   }
   var posupqu = {
     "conditions": "id = '" + posid + "'",
-    "values": { "active": 'false'}
+    "values": { "active": 'false', "finishpnl": pnl}
   }
   tblPos.SQUpdate(posupqu);
 }
 
 module.exports = {
-  controlOrders
+  controlOrders,
+  mainController
 }

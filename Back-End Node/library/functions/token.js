@@ -100,12 +100,12 @@ const functionModule = {
   "help": {
     "GET": {
       "info": "Get a new token with username and password.",
-      "params": ["username*", "password*"],
+      "params": ["*username", "*password"],
       "returns": ["username", "permLevel", "token"]
     },
     "DELETE": {
       "info": "Dispose a token from server.",
-      "params": ["token*"],
+      "params": ["*token"],
       "returns": ["info"]
     }
   }

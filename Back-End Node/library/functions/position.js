@@ -1,10 +1,40 @@
 const con = require('../connection')
 const stgs = require('../settings')
 
-const tblUser = stgs.tableModules['user'];
+const tblUser = stgs.tableModules.user;
+const vPos = stgs.viewModules.positionunited;
 
 function fGET(req, res) {
+  let qu = req.query;
+  var token = req.get('Token');
+  var userdata = stgs.authTokens[token];
 
+  var filterstrings = ['username'];
+  var regex = new RegExp( filterstrings.join( "|" ), "i");
+
+  if (qu.hasOwnProperty('conditions')) {
+    if (regex.test(qu.conditions)) { return res.status(406).json({"Success": false, "Error": "You cannot include username in conditions."})}
+    if (qu.conditions.length > 0) {
+      qu.conditions += " AND username = '" + userdata.username + "'";
+    }
+    else {
+      qu.conditions = "username = '" + userdata.username + "'";
+    }
+  }
+  else {
+    qu.conditions = "username = '" + userdata.username + "'";
+  }
+
+  var sql = vPos.CSelectAll(qu);
+
+  con.pool.query(sql, (error, results) => {
+    if (error) { return res.status(400).json({"Success": false, "Error": error}); }
+    res.status(200).json({
+      "Success": true,
+      "RowCount": results.rowCount,
+      "Data": results.rows
+    })
+  })
 
 
 }

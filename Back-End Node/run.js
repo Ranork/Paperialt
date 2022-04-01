@@ -23,4 +23,4 @@ var server = app.listen(stgs.port, function () {
    console.log("Back-End Node listening at http://127.0.0.1:%s", stgs.port)
 })
 
-or_cont.controlOrders();
+or_cont.mainController();

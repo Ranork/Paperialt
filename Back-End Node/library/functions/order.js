@@ -5,6 +5,8 @@ const tblUser = stgs.tableModules.user;
 const tblOrder = stgs.tableModules.order;
 const tblWallet = stgs.tableModules.wallet;
 const vOrder = stgs.viewModules.orderunited;
+const vWallet = stgs.viewModules.walletunited;
+const tblPos = stgs.tableModules.position
 
 function fGET(req, res) {
   let qu = req.query;
@@ -45,8 +47,6 @@ function fPOST(req, res) {
   var token = req.get('Token');
   var userdata = stgs.authTokens[token];
 
-  // control all amount decreaser orders if this order chan change the position amount to subzero then block request
-
   var reqfields = [
     "wallet", "position", "type", "symbol", "targetprice", "amount", "bs"
   ];
@@ -58,7 +58,7 @@ function fPOST(req, res) {
 
   const wlid = body.wallet;
 
-  sql = tblWallet.CSelectAll({"conditions": "id = '" + wlid + "'"})
+  sql = vWallet.CSelectAll({"conditions": "id = '" + wlid + "'"})
 
   con.pool.query(sql, (error, results) => {
     if (error) { return res.status(500).json({"Success": false, "Error": error}) }
@@ -72,12 +72,28 @@ function fPOST(req, res) {
       return res.status(500).json({"Success": false, "Error": "Wallet is not yours."})
     }
 
+    var pos = tblPos.SQSelectOne(body.position);
+
+    if (Object.keys(pos).length <= 0) {
+      return res.status(500).json({"Success": false, "Error": "Position not found!"})
+    }
+
+    if ((pos.type == 'SHORT' && body.bs == 'SELL') || (pos.type == 'LONG' && body.bs == 'BUY')) {
+      if (wldata['availablebalance'] < (body.targetprice * body.amount)) {
+        return res.status(500).json({"Success": false, "Error": "Wallet available balance is not enough."})
+      }
+    }
+    else {
+      if (pos.totalstock < body.amount) {
+        return res.status(500).json({"Success": false, "Error": "Position amount is not enough."})
+      }
+    }
+
+
     body['startdate'] = (new Date()).stringer();
 
     con.pool.query(tblOrder.CInsert(body), (error, results) => {
       if (error) { return res.status(500).json({"Success": false, "Error": error}) }
-
-      // Add internal chasing for order
 
       return res.status(200).json({"Success": true})
 
