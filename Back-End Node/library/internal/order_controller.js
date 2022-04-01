@@ -37,19 +37,19 @@ async function controlOrders() {
 
         if (order.bs === 'BUY' && stprices.market <= tPrice) {
           // BUY MODE
-          triggerOrder(order.id, stprices)
-          console.log("[ID: " + order.id +"] Buy Order Triggered. Type: " + order.type + 
+          console.log("[ORD " + order.id +"] Buy Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
                       " TargetPrice: " + order.targetprice +
                       " MarketPrice: " + stprices.market);
+          triggerOrder(order.id, stprices)
         }
         else if (order.bs === 'SELL' && stprices.market >= tPrice) {
           // SELL MODE
-          triggerOrder(order.id, stprices)
-          console.log("[ID: " + order.id +"] Sell Order Triggered. Type: " + order.type + 
+          console.log("[ORD " + order.id +"] Sell Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
                       " TargetPrice: " + order.targetprice +
                       " MarketPrice: " + stprices.market);
+          triggerOrder(order.id, stprices)
         }
       });
 
@@ -65,23 +65,54 @@ async function triggerOrder(orderid, stockprices) {
   const pos = tblPos.SQSelectOne(order.position);
   const wallet = tblWallet.SQSelectOne(order.wallet);
 
-  // deactivateOrder(orderid);
+  deactivateOrder(orderid);
 
   var occuredPayment = (order.amount * stockprices.market);
   var occuredAmount = order.amount;
 
+  var newWalBalance = wallet.currentbalance;
+
+  var posAvgUsd = pos.totalusd / pos.totalstock;
+
   if ((pos.type == 'SHORT' && order.bs == 'BUY') || (pos.type == 'LONG' && order.bs == 'SELL')) {
     // DECREASE BALANCES
+
+    switch (pos.type) {
+      case "SHORT": newWalBalance +=  posAvgUsd - occuredPayment; break;
+      case "LONG": newWalBalance += occuredPayment - posAvgUsd; break;
+    }
+
     occuredAmount = -1 * occuredAmount;
     occuredPayment = -1 * occuredPayment;
   }
 
+  // position total usd is goin wrong
+  
   var posUpQu = {
-    "totalstock": pos.totalstock + order.amount,
-    "totalusd": pos.totalusd + occuredPayment
+    "conditions": "id = '" + pos.id + "'",
+    "values": {
+      "totalstock": pos.totalstock + occuredAmount,
+      "totalusd": pos.totalusd + occuredPayment,
+    }
+  }
+
+  var walUpQu = {
+    "conditions": "id = '" + wallet.id + "'",
+    "values": {
+      "currentbalance": newWalBalance
+    }
   }
 
   console.log(posUpQu);
+  console.log(walUpQu);
+
+  tblPos.SQUpdate(posUpQu);
+  tblWallet.SQUpdate(walUpQu);
+
+  if (posUpQu.values.totalstock <= 0) {
+    console.log("[POS " + pos.id + "] Completed. PnL: " + (newWalBalance - wallet.currentbalance).toFixed(4));
+    deactivatePosition(pos.id);
+  }
 
 }
 
@@ -89,18 +120,31 @@ async function deactivateOrder(orderid) {
   var qu = {
     "values": {
       "finishdate": (new Date()).stringer(),
-      "endtype": "COMPLETED"
+      "endtype": "COMPLETED",
+      "active": "false",
     },
     "conditions": "id = '" + orderid + "'"
   }
 
-  var sql = tblOrder.CUpdate(qu)
-  con.pool.query(sql, (error, results) => {
-    if (error) { console.log(error) }
-    console.log("Order closed");
-  });
+  tblOrder.SQUpdate(qu);
 }
 
+async function deactivatePosition(posid) {
+  const orders = tblOrder.SQSelectAll({"conditions": "position = '" + posid + "'"});
+  for (var oid in orders) {
+    var order = orders[oid];
+    var upqu = {
+      "conditions": "id = '" + order.id + "'",
+      "values": { "active": 'false' }
+    }
+    tblOrder.SQUpdate(upqu);
+  }
+  var posupqu = {
+    "conditions": "id = '" + posid + "'",
+    "values": { "active": 'false'}
+  }
+  tblPos.SQUpdate(posupqu);
+}
 
 module.exports = {
   controlOrders
