@@ -4,9 +4,11 @@ const stgs = require('../settings')
 const tblUser = stgs.tableModules.user;
 const tblOrder = stgs.tableModules.order;
 const tblWallet = stgs.tableModules.wallet;
+const tblPos = stgs.tableModules.position;
+
 const vOrder = stgs.viewModules.orderunited;
 const vWallet = stgs.viewModules.walletunited;
-const tblPos = stgs.tableModules.position
+const vPos = stgs.viewModules.positionunited;
 
 function fGET(req, res) {
   let qu = req.query;
@@ -48,7 +50,7 @@ function fPOST(req, res) {
   var userdata = stgs.authTokens[token];
 
   var reqfields = [
-    "wallet", "position", "type", "symbol", "targetprice", "amount", "bs"
+    "position", "type", "symbol", "targetprice", "amount", "bs"
   ];
 
   for (var ri in reqfields) {
@@ -56,51 +58,34 @@ function fPOST(req, res) {
     if (!body.hasOwnProperty(rfield)) { return res.status(400).json({"Success": false, "Error": rfield + " not found in body."}); }
   }
 
-  const wlid = body.wallet;
+  var pos = vPos.SQSelectOne(body.position);
 
-  sql = vWallet.CSelectAll({"conditions": "id = '" + wlid + "'"})
+  if (Object.keys(pos).length <= 0) { return res.status(500).json({"Success": false, "Error": "Position not found!"}) }
+  if (pos.username !== userdata.username) { return res.status(500).json({"Success": false, "Error": "Position is not yours."}); }
 
-  con.pool.query(sql, (error, results) => {
+  var wldata = vWallet.SQSelectOne(pos.walletid);
+
+  if ((pos.type == 'SHORT' && body.bs == 'SELL') || (pos.type == 'LONG' && body.bs == 'BUY')) {
+    if (wldata['availablebalance'] < (body.targetprice * body.amount)) {
+      return res.status(500).json({"Success": false, "Error": "Wallet available balance is not enough."})
+    }
+  }
+  else {
+    if (pos.totalstock < body.amount) {
+      return res.status(500).json({"Success": false, "Error": "Position amount is not enough."})
+    }
+  }
+
+  body['wallet'] = pos.walletid;
+  body['symbol'] = pos.symbol;
+  body['startdate'] = (new Date()).stringer();
+
+  con.pool.query(tblOrder.CInsert(body), (error, results) => {
     if (error) { return res.status(500).json({"Success": false, "Error": error}) }
 
-    if (results.rowCount <= 0) { return res.status(500).json({"Success": false, "Error": "Wallet not found in the system."}); }
-
-    const wldata = results.rows[0];
-    const wluser = wldata['username'];
-
-    if (userdata.username !== wluser) {
-      return res.status(500).json({"Success": false, "Error": "Wallet is not yours."})
-    }
-
-    var pos = tblPos.SQSelectOne(body.position);
-
-    if (Object.keys(pos).length <= 0) {
-      return res.status(500).json({"Success": false, "Error": "Position not found!"})
-    }
-
-    if ((pos.type == 'SHORT' && body.bs == 'SELL') || (pos.type == 'LONG' && body.bs == 'BUY')) {
-      if (wldata['availablebalance'] < (body.targetprice * body.amount)) {
-        return res.status(500).json({"Success": false, "Error": "Wallet available balance is not enough."})
-      }
-    }
-    else {
-      if (pos.totalstock < body.amount) {
-        return res.status(500).json({"Success": false, "Error": "Position amount is not enough."})
-      }
-    }
-
-
-    body['startdate'] = (new Date()).stringer();
-
-    con.pool.query(tblOrder.CInsert(body), (error, results) => {
-      if (error) { return res.status(500).json({"Success": false, "Error": error}) }
-
-      return res.status(200).json({"Success": true})
-
-    });
+    return res.status(200).json({"Success": true})
 
   });
-
 
 }
 
@@ -159,7 +144,7 @@ const functionModule = {
     },
     "POST": {
       "info": "Create a new order",
-      "params": ["*wallet", "*position", "*type: LIMIT, MARKET, TAKEPROFIT, STOPLOSS", "*symbol", "*targetprice", "*amount", "explanation", "*bs: BUY, SELL"],
+      "params": ["*position", "*type: LIMIT, MARKET, TAKEPROFIT, STOPLOSS", "*targetprice", "*amount", "explanation", "*bs: BUY, SELL"],
       "returns": ["info"]
     },
     "DELETE": {

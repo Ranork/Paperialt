@@ -1,0 +1,792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paperialt Test</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Dancing+Script">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <style>
+    :root {
+      --d1: #1e1e1e;
+      --d2: #252526;
+      --d3: #2d2d30;
+      --d4: #3e3e42;
+      --l1: #007acc;
+      --l2: #fff4f4f4;
+      --l3: #747474;
+    }
+
+    body {
+      background-color: var(--d1);
+      color: var(--l2);
+    }
+
+    .navb {
+      background-color: var(--d2);
+      padding: 5px;
+      text-align: center;
+      color: var(--l1);
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: 35px;
+      font-weight: bold;
+      font-family: "Dancing Script";
+      margin-top: 5px;
+    }
+
+    h2 {
+      font-size: 22px;
+      color: var(--l1);
+      /*text-align: center;*/
+      padding-left: 10px;
+      margin-bottom: 15px;
+    }
+
+    h3 {
+      font-size: 18px;
+      color: var(--l1);
+      padding-left: 10px;
+      margin-bottom: 10px;
+    }
+
+    .req_desc {
+      font-size: 16px;
+      color: var(--l3);
+      padding-left: 5px;
+    }
+
+    .badge {
+      background-color: var(--d4);
+    }
+
+    .table {
+      color: var(--l2);
+      font-size: 12px;
+      margin-bottom: 5px;
+    }
+
+    .table tr:hover {
+      background-color: var(--d4);
+    }
+
+    thead {
+      background-color: var(--d3);
+    }
+
+    .box {
+      background-color: var(--d2);
+      border: 1px var(--d4) solid;
+      padding-top: 10px;
+      padding-left: 5px;
+      padding-right: 5px;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .refr-btn {
+      position: absolute;
+      right: 5px;
+      top: 10px;
+      border-color: transparent !important;
+    }
+
+    .input-group-text {
+      background-color: var(--d3);
+      color: var(--l2);
+      border-color: var(--l1);
+    }
+
+    .form-control {
+      background-color: var(--d4);
+      color: var(--l2);
+      border-color: var(--l1);
+    }
+    
+    .form-control:disabled {
+      background-color: var(--d4);
+      color: var(--l2);
+      border-color: var(--l1);
+    }
+    
+    .form-control:focus {
+      background-color: var(--d4);
+      color: var(--l2);
+    }
+
+    .form-select {
+      background-color: var(--d4);
+      color: var(--l2);
+      border-color: var(--l1);
+    }
+
+    .btn-secondary {
+      background-color: var(--d4);
+      color: var(--l2);
+      border-color: var(--l1);
+    }
+    .btn-secondary:hover {
+      background-color: var(--d3);
+      border-color: var(--l1);
+    }
+    
+  </style>
+
+</head>
+<body>
+
+<div class="container-fluid navb">
+  <h1>Paperialt</h1>
+  <div style="color: var(--l3); margin-top: -15px; padding-top: 0px;">Akatron Network</div>
+</div>
+
+<div class="container-fluid">
+  <div class="row">
+
+    <!-- WALLETS -->
+    <div class="col-4">
+      <div class="box">
+        <h2><span class="badge" id="wallet_count">0</span> Wallets</h2>
+
+        <button onclick="fetchWallets();" type="button" class="btn btn-secondary btn-sm refr-btn"><i class="fa-solid fa-arrows-rotate"></i></button>
+
+        <table class="table table-borderless table-sm">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Expl.</th>
+              <th scope="col">Start Bal</th>
+              <th scope="col">Current Bal</th>
+              <th scope="col">Available</th>
+              <th scope="col">Private</th>
+              <th scope="col">PnL</th>
+            </tr>
+          </thead>
+          <tbody id="wallet_body">
+          </tbody>
+        </table>
+
+        <hr> <!-- POST -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          POST 
+          <span class="req_desc">Create a wallet</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Wallet Name</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" value="Unnamed Wallet" id="wal_post_name">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon2">Start Balance</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon2" value="5000" id="wal_post_startbalance">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Private</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="wal_post_isprivate">
+            <option value="false" selected>Public</option>
+            <option value="true">Private</option>
+          </select>
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="walletPostSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+        <hr> <!-- PUT -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          PUT 
+          <span class="req_desc">Update a wallet</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Wallet ID</span>
+          <input onfocusout="walletPutGet()" type="text" class="form-control" aria-describedby="basic-addon1" id="wal_put_id">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Wallet Name</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="wal_put_name">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon2">Start Balance</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon2" id="wal_put_startbalance">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Private</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="wal_put_isprivate">
+            <option value="false" selected>Public</option>
+            <option value="true">Private</option>
+          </select>
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="walletPutSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+        <hr> <!-- DELETE -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          DELETE 
+          <span class="req_desc">Remove a wallet</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Wallet ID</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="wal_delete_id">
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="walletDeleteSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+
+      </div>
+    </div>
+    
+    <!-- POSITIONS -->
+    <div class="col-4">
+      <div class="box">
+        <h2><span class="badge" id="position_count">0</span> Positions</h2>
+        
+        <button onclick="fetchPositions();" type="button" class="btn btn-secondary btn-sm refr-btn"><i class="fa-solid fa-arrows-rotate"></i></button>
+
+        <table class="table table-borderless table-sm">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Wallet</th>
+              <th scope="col">Type</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Balance</th>
+              <th scope="col">Private</th>
+              <th scope="col">UPnL</th>
+              <th scope="col">RPnL</th>
+            </tr>
+          </thead>
+          <tbody id="position_body">
+          </tbody>
+        </table>
+
+        <hr> <!-- POST -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          POST 
+          <span class="req_desc">Create new position</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Wallet ID</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="pos_post_walletid">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Type</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="pos_post_type">
+            <option value="LONG" selected>LONG</option>
+            <option value="SHORT">SHORT</option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Market</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="pos_post_market">
+            <option value="NASDAQ" selected>NASDAQ</option>
+            <option value="BINANCE">BINANCE</option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Symbol</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="pos_post_symbol">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Private</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="pos_post_isprivate">
+            <option value="false" selected>Public</option>
+            <option value="true">Private</option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Explanation</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="pos_post_explanation">
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="posPostSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+        <hr> <!-- DELETE -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          DELETE 
+          <span class="req_desc">Deactivate a position</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Position ID</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="pos_delete_id">
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="posDeleteSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+      </div>
+    </div>
+    
+    <!-- ORDERS -->
+    <div class="col-4">
+      <div class="box">
+        <h2><span class="badge" id="order_count">0</span> Orders</h2>
+        
+        <button onclick="fetchOrders();" type="button" class="btn btn-secondary btn-sm refr-btn"><i class="fa-solid fa-arrows-rotate"></i></button>
+
+        <table class="table table-borderless table-sm">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Expl.</th>
+              <th scope="col">Wal.</th>
+              <th scope="col">Pos.</th>
+              <th scope="col">Symbol</th>
+              <th scope="col">Type</th>
+              <th scope="col">Target - Current</th>
+              <th scope="col">Amount</th>
+              <th scope="col">End</th>
+            </tr>
+          </thead>
+          <tbody id="order_body">
+          </tbody>
+        </table>
+        
+        <hr> <!-- POST -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          POST 
+          <span class="req_desc">Create new order</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Position ID</span>
+          <input onfocusout="ordPostGet()" type="text" class="form-control" aria-describedby="basic-addon1" id="ord_post_position">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Type</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="ord_post_type">
+            <option value="LIMIT" selected>LIMIT</option>
+            <option value="MARKET">MARKET</option>
+            <option value="TAKEPROFIT">TAKE PROFIT</option>
+            <option value="STOPLOSS">STOP LOSS</option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Symbol</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="ord_post_symbol" disabled>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Target Price</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="ord_post_targetprice">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Amount</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="ord_post_amount">
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon3">Buy / Sell</span>
+          <select class="form-select"  aria-describedby="basic-addon3" id="ord_post_bs">
+            <option value="BUY" selected>BUY</option>
+            <option value="SELL">SELL</option>
+          </select>
+        </div>
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Explanation</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="ord_post_explanation">
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="ordPostSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+        <hr> <!-- DELETE -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          DELETE 
+          <span class="req_desc">Deactivate an order</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Order ID</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="ord_delete_id">
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="ordDeleteSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+
+<script>
+
+// STATIC --------------------------------------------------------------------------
+
+// Variables
+
+const baseurl = "http://127.0.0.1:919/";
+const funcurl = baseurl + "function/";
+const tablurl = baseurl + "table/";
+const token = "PaperialToken_admin";
+
+// Functions
+
+function syncAjax(method = "GET", targeturl, sendingdata) {
+  ans = {};
+  $.ajax({
+    type: method,
+    url: targeturl,
+    beforeSend: function(request) {
+      request.setRequestHeader("Token", token);
+      request.setRequestHeader("Access-Control-Allow-Origin", baseurl);
+    },
+    async: false,
+    dataType: "json",
+    data: sendingdata,
+    success: function(resp){
+      ans = resp;
+    },
+    error: function(resp){
+      console.log(resp);
+    }
+  });
+  return ans;
+}
+
+function syncFuncReq(method = "GET", funcname, sendingdata) {
+  return syncAjax(method, funcurl + funcname, sendingdata);
+}
+
+function syncTablReq(method = "GET", tablname, sendingdata) {
+  return syncAjax(method, tablurl + tablname, sendingdata);
+}
+
+
+// Fetch Tables
+
+function fetchWallets() {
+  var walDiv = document.getElementById('wallet_body');
+  walDiv.innerHTML = "";
+
+  var walletdata = syncFuncReq("GET", "wallet", {"order": "id desc"})['Data'];
+
+  document.getElementById('wallet_count').innerText = walletdata.length;
+
+  for (var wi in walletdata) {
+    var wal = walletdata[wi];
+
+    var pnl = wal.currentbalance - wal.startbalance;
+    var pnlrate = (pnl / wal.startbalance) * 100;
+
+    for (var key in wal) {
+      if (wal[key] == null) {
+        wal[key] = "";
+      }
+    }
+
+    var ht =  '<tr><td>' + wal.id + '</td>' +
+              '<td>' + wal.name + '</td>' +
+              '<td>' + wal.explanation + '</td>' +
+              '<td>' + wal.startbalance.toFixed(2) + '</td>' +
+              '<td>' + wal.currentbalance.toFixed(2) + '</td>' +
+              '<td style="font-weight: bold;">' + wal.availablebalance.toFixed(2) + ' $</td>' +
+              '<td>' + wal.isprivate + '</td>' +
+              '<td>' + pnl.toFixed(2) + " (%" + pnlrate.toFixed(2) + ")" + '</td></tr>';
+
+    walDiv.insertAdjacentHTML('beforeend', ht)
+  }
+}
+
+function fetchPositions() {
+  var posDiv = document.getElementById('position_body');
+  posDiv.innerHTML = "";
+
+  var posData = syncFuncReq("GET", "position", {"order": "active desc, id asc"})['Data'];
+  document.getElementById('position_count').innerText = posData.length;
+
+  for (var pi in posData) {
+    var pos = posData[pi];
+
+    var ht = '';
+    if (pos.active) { ht += '<tr>'; }
+    else { ht += '<tr style="color: var(--l3);">' }
+
+    if (pos.finishpnl == null) {pos.finishpnl = 0;}
+
+    var upnl = 0;
+    if (pos.active) {
+      var mprice = getStockQuote(pos.symbol).MarketPrice;
+      var posprice = pos.totalusd / pos.totalstock;
+
+      if (pos.type === 'LONG') {
+        upnl = (mprice - posprice) * pos.totalstock;
+      }
+      else {
+        upnl = (posprice - mprice) * pos.totalstock
+      }
+    }
+
+    ht += '<td>' + pos.id + '</td>' +
+          '<td>' + pos.walletid + '</td>' +
+          '<td>' + pos.type + '</td>' +
+          '<td>' + pos.market + ' : ' + pos.symbol + '</td>' +
+          '<td>' + pos.totalstock.toFixed(2) + ' - ' + pos.totalusd.toFixed(2) + ' $' + '</td>' +
+          '<td>' + pos.isprivate + '</td>' +
+          '<td>' + upnl.toFixed(2) + '</td>' +
+          '<td>' + pos.finishpnl.toFixed(2) + '</td></tr>';
+    
+    posDiv.insertAdjacentHTML('beforeend', ht);
+  }
+}
+
+function fetchOrders() {
+  var ordDiv = document.getElementById('order_body');
+  ordDiv.innerHTML = "";
+
+  var ordData = syncFuncReq("GET", "order", {"order": "active desc, id asc"})['Data'];
+  document.getElementById('order_count').innerText = ordData.length;
+
+  for (var oi in ordData) {
+    var order = ordData[oi];
+
+    for (var key in order) {
+      if (order[key] == null) {
+        order[key] = "";
+      }
+    }
+
+    var ht = '';
+    if (order.active) { ht += '<tr>'; }
+    else { ht += '<tr style="color: var(--l3);">' }
+
+    var marprice = 0;
+    if (order.active) { marprice = getStockQuote(order.symbol).MarketPrice;}
+
+    ht += '<td>' + order.id + '</td>' +
+          '<td>' + order.explanation + '</td>' +
+          '<td>' + order.wallet + '</td>' +
+          '<td>' + order.position + '</td>' +
+          '<td>' + order.symbol + '</td>' +
+          '<td>' + order.type + ' ' + order.bs + '</td>' +
+          '<td>' + order.targetprice.toFixed(2) + ' - ' + marprice.toFixed(2) + '</td>' +
+          '<td>' + order.amount.toFixed(2) + '</td>' +
+          '<td>' + order.endtype + '</td>';
+    
+    ordDiv.insertAdjacentHTML('beforeend', ht);
+  }
+}
+
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+async function autoFetch() {
+  while (true) {
+    console.log("Fetching data...");
+    fetchWallets();
+    fetchPositions();
+    fetchOrders();
+    await sleep(50000);
+  }
+}
+
+autoFetch();
+
+function getStockQuote(stock) {
+  return syncFuncReq("GET", "stock_quote", {"symbol": stock});
+}
+
+// REQUEST FUNCTIONS -----------------------------------------------------------------
+
+// Wallet
+
+function walletPostSubmit() {
+  console.log("POST REQUEST - WALLET");
+  var sendData = {
+    "name": document.getElementById('wal_post_name').value,
+    "startbalance": document.getElementById('wal_post_startbalance').value,
+    "isprivate": document.getElementById('wal_post_isprivate').value
+  };
+
+  var ans = syncFuncReq("POST", "wallet", sendData);
+
+  console.log(ans);
+  fetchWallets();
+}
+
+function walletPutGet() {
+  console.log("PUT/GET REQUEST - WALLET");
+
+  var walid = document.getElementById('wal_put_id').value;
+  if (walid.length < 1) {
+    document.getElementById('wal_put_name').value = "";
+    document.getElementById('wal_put_startbalance').value = "";
+    document.getElementById('wal_put_isprivate').value = "";
+    return;
+  }
+
+  var waldata = syncFuncReq("GET", "wallet", {"conditions": "id::int = " + walid, "limit": 1})['Data'];
+
+  if (waldata.length <= 0) {
+    document.getElementById('wal_put_name').value = "";
+    document.getElementById('wal_put_startbalance').value = "";
+    document.getElementById('wal_put_isprivate').value = "";
+    return;
+  }
+
+  var wallet = waldata[0];
+
+  document.getElementById('wal_put_name').value = wallet.name;
+  document.getElementById('wal_put_startbalance').value = wallet.startbalance;
+  document.getElementById('wal_put_isprivate').value = wallet.isprivate;
+  console.log(waldata);
+}
+
+function walletPutSubmit() {
+  console.log("PUT REQUEST - WALLET");
+  var sendData = {
+    "id": document.getElementById('wal_put_id').value,
+    "name": document.getElementById('wal_put_name').value,
+    "startbalance": document.getElementById('wal_put_startbalance').value,
+    "isprivate": document.getElementById('wal_put_isprivate').value
+  }
+
+  var ans = syncFuncReq("PUT", "wallet", sendData);
+
+  console.log(ans);
+  fetchWallets();
+
+  document.getElementById('wal_put_id').value = "";
+  walletPutGet();
+}
+
+function walletDeleteSubmit() {
+  console.log("DELETE REQUEST - WALLET");
+  var sendData = {
+    "id": document.getElementById('wal_delete_id').value
+  }
+
+  var ans = syncFuncReq("DELETE", "wallet", sendData);
+
+  console.log(ans);
+  fetchWallets();
+  document.getElementById('wal_delete_id').value = "";
+}
+
+// Position
+
+function posPostSubmit() {
+  console.log("POST REQUEST - POSITION");
+  var sendData = {
+    "walletid": document.getElementById('pos_post_walletid').value,
+    "type": document.getElementById('pos_post_type').value,
+    "market": document.getElementById('pos_post_market').value,
+    "symbol": document.getElementById('pos_post_symbol').value,
+    "isprivate": document.getElementById('pos_post_isprivate').value,
+    "explanation": document.getElementById('pos_post_explanation').value
+  }
+
+  var ans = syncFuncReq("POST", "position", sendData);
+
+  console.log(ans);
+  fetchPositions();
+}
+
+function posDeleteSubmit() {
+  console.log("DELETE REQUEST - POSITION");
+  var sendData = {
+    "id": document.getElementById('pos_delete_id').value
+  }
+
+  var ans = syncFuncReq("DELETE", "position", sendData);
+
+  console.log(ans);
+  fetchPositions();
+  document.getElementById('pos_delete_id').value = "";
+}
+
+// Order
+
+function ordPostGet() {
+  console.log("POST/GET REQUEST - ORDER");
+
+  var posid = document.getElementById('ord_post_position').value;
+  if (posid.length <= 0) {
+    document.getElementById('ord_post_symbol').value = "";
+    return;
+  }
+
+  var posData = syncFuncReq("GET", "position", {"conditions": "id = " + posid, "limit": 1})['Data'];
+  if (posData.length <= 0) {
+    document.getElementById('ord_post_symbol').value = "";
+    document.getElementById('ord_post_position').value = "";
+    return;
+  }
+
+  document.getElementById('ord_post_symbol').value = posData[0]['symbol'];
+
+  var quote = getStockQuote(posData[0]['symbol']);
+  document.getElementById('ord_post_targetprice').value = quote.MarketPrice;
+}
+
+function ordPostSubmit() {
+  console.log("POST REQUEST - ORDER");
+  var sendData = {
+    "position": document.getElementById('ord_post_position').value,
+    "type": document.getElementById('ord_post_type').value,
+    "symbol": document.getElementById('ord_post_symbol').value,
+    "targetprice": document.getElementById('ord_post_targetprice').value,
+    "amount": document.getElementById('ord_post_amount').value,
+    "bs": document.getElementById('ord_post_bs').value,
+    "explanation": document.getElementById('ord_post_explanation').value
+  }
+
+  var ans = syncFuncReq("POST", "order", sendData);
+
+  console.log(ans);
+  fetchOrders();
+}
+
+function ordDeleteSubmit() {
+  console.log("DELETE REQUEST - ORDER");
+  var sendData = {
+    "id": document.getElementById('ord_delete_id').value
+  }
+
+  var ans = syncFuncReq("DELETE", "order", sendData);
+
+  console.log(ans);
+  fetchOrders();
+  document.getElementById('ord_delete_id').value = "";
+}
+
+</script>
+
+
+</body>
+</html>

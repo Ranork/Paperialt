@@ -7,6 +7,7 @@ const fun_cnstr = require('./library/functions/constructor')
 const con = require('./library/connection')
 const tbl_def = require('./library/table/definitions')
 const or_cont = require('./library/internal/order_controller')
+const cors = require('cors')
 
 
 const app = express();
@@ -14,7 +15,7 @@ const router = express.Router()
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true, }))
-
+app.use(cors())
 
 tbl_resp.integrateApp(app);
 fun_cnstr.integrateApp(app);

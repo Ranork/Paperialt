@@ -2,6 +2,7 @@ const stgs = require('../settings')
 const con = require('../connection')
 
 const tblwal = stgs.tableModules['wallet'];
+const vWal = stgs.viewModules.walletunited;
 
 function fPOST(req, res) {
   var token = req.get('Token');
@@ -67,9 +68,14 @@ function fGET(req, res) {
   var userdata = stgs.authTokens[token];
   var qu = req.query;
 
-  qu['conditions'] = "username = '" + userdata['username'] + "'";
+  if (qu.hasOwnProperty('conditions')) {
+    qu['conditions'] += " AND username = '" + userdata['username'] + "'";
+  }
+  else {
+    qu['conditions'] = "username = '" + userdata['username'] + "'";
+  }
 
-  con.pool.query(tblwal.CSelectAll(qu), (error, results) => {
+  con.pool.query(vWal.CSelectAll(qu), (error, results) => {
     if (error) { return res.status(500).json({"Success": false, "Error": error}) }
 
     delete qu['conditions'];

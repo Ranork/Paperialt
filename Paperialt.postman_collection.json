@@ -556,7 +556,7 @@
 								"method": "GET",
 								"header": [],
 								"url": {
-									"raw": "127.0.0.1:919/function/wallet?order=id ASC",
+									"raw": "127.0.0.1:919/function/wallet",
 									"host": [
 										"127",
 										"0",
@@ -571,7 +571,8 @@
 									"query": [
 										{
 											"key": "order",
-											"value": "id ASC"
+											"value": "id ASC",
+											"disabled": true
 										}
 									]
 								}
@@ -1046,7 +1047,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"wallet\": 9,\r\n    \"position\": 1,\r\n    \"type\": \"LIMIT\",\r\n    \"symbol\": \"TSLA\",\r\n    \"targetprice\": 12.34,\r\n    \"amount\": 12.54,\r\n    \"explanation\": \"TEST ORDER\"\r\n}",
+									"raw": "{\r\n    \"wallet\": 9,\r\n    \"position\": 1,\r\n    \"type\": \"LIMIT\",\r\n    \"symbol\": \"TSLA\",\r\n    \"targetprice\": 1100,\r\n    \"amount\": 4,\r\n    \"explanation\": \"TEST ORDER\",\r\n    \"bs\": \"BUY\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -1222,6 +1223,388 @@
 										{
 											"key": "Date",
 											"value": "Mon, 28 Mar 2022 22:48:05 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Stock Quote",
+					"item": [
+						{
+							"name": "STOCK_QUOTE",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/function/stock_quote/?symbol=TMCI",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"stock_quote",
+										""
+									],
+									"query": [
+										{
+											"key": "symbol",
+											"value": "TMCI"
+										}
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:919/function/stock_quote/?symbol=TSLA",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"stock_quote",
+												""
+											],
+											"query": [
+												{
+													"key": "symbol",
+													"value": "TSLA"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "1175"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"497-ktb7y5R6gvkPzVOPnoYCr0C9iWY\""
+										},
+										{
+											"key": "Date",
+											"value": "Fri, 01 Apr 2022 20:19:04 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"MarketPrice\": 1084.59,\n    \"Source\": \"Nasdaq Real Time Price\",\n    \"ChangePercent\": 0.6486628,\n    \"Details\": {\n        \"maxAge\": 1,\n        \"preMarketChangePercent\": 0.00302525,\n        \"preMarketChange\": 3.26001,\n        \"preMarketTime\": \"2022-04-01T13:29:59.000Z\",\n        \"preMarketPrice\": 1080.86,\n        \"preMarketSource\": \"FREE_REALTIME\",\n        \"postMarketChangePercent\": 0.0022220693,\n        \"postMarketChange\": 2.4100342,\n        \"postMarketTime\": \"2022-04-01T20:19:02.000Z\",\n        \"postMarketPrice\": 1087,\n        \"postMarketSource\": \"FREE_REALTIME\",\n        \"regularMarketChangePercent\": 0.006486628,\n        \"regularMarketChange\": 6.98999,\n        \"regularMarketTime\": \"2022-04-01T20:00:04.000Z\",\n        \"priceHint\": 2,\n        \"regularMarketPrice\": 1084.59,\n        \"regularMarketDayHigh\": 1094.75,\n        \"regularMarketDayLow\": 1066.64,\n        \"regularMarketVolume\": 17415389,\n        \"regularMarketPreviousClose\": 1077.6,\n        \"regularMarketSource\": \"FREE_REALTIME\",\n        \"regularMarketOpen\": 1081.15,\n        \"exchange\": \"NMS\",\n        \"exchangeName\": \"NasdaqGS\",\n        \"exchangeDataDelayedBy\": 0,\n        \"marketState\": \"POST\",\n        \"quoteType\": \"EQUITY\",\n        \"symbol\": \"TSLA\",\n        \"underlyingSymbol\": null,\n        \"shortName\": \"Tesla, Inc.\",\n        \"longName\": \"Tesla, Inc.\",\n        \"currency\": \"USD\",\n        \"quoteSourceName\": \"Nasdaq Real Time Price\",\n        \"currencySymbol\": \"$\",\n        \"fromCurrency\": null,\n        \"toCurrency\": null,\n        \"lastMarket\": null,\n        \"marketCap\": 1137984405504\n    }\n}"
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Position",
+					"item": [
+						{
+							"name": "POSITION",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "127.0.0.1:919/function/position/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"position",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "127.0.0.1:919/function/order/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"order",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "285"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"11d-GsWKskEWTq1n8yeQkXN7k1pBMhc\""
+										},
+										{
+											"key": "Date",
+											"value": "Mon, 28 Mar 2022 22:40:48 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"RowCount\": 1,\n    \"Data\": [\n        {\n            \"username\": \"ranork\",\n            \"walletname\": \"Unnamed Wallet\",\n            \"id\": 2,\n            \"wallet\": 9,\n            \"position\": 1,\n            \"type\": \"LIMIT\",\n            \"symbol\": \"TSLA\",\n            \"targetprice\": 30,\n            \"amount\": 5,\n            \"startdate\": \"2022-03-27T12:04:53.000Z\",\n            \"finishdate\": null,\n            \"active\": true,\n            \"explanation\": null,\n            \"endtype\": null\n        }\n    ]\n}"
+								}
+							]
+						},
+						{
+							"name": "POSITION",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"walletid\": 9,\r\n    \"type\": \"LONG\",\r\n    \"market\": \"NASDAQ\",\r\n    \"symbol\": \"AAPL\",\r\n    \"isprivate\": false,\r\n    \"explanation\": \"Test Position\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/position/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"position",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"walletid\": 9,\r\n    \"type\": \"LONG\",\r\n    \"market\": \"NASDAQ\",\r\n    \"symbol\": \"AAPL\",\r\n    \"isprivate\": false,\r\n    \"explanation\": \"Test Position\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/position/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"position",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "362"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"16a-KpOQHSiAmq87DmCNZ+vzjz7+/vQ\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 05 Apr 2022 21:11:35 GMT"
+										},
+										{
+											"key": "Connection",
+											"value": "keep-alive"
+										},
+										{
+											"key": "Keep-Alive",
+											"value": "timeout=5"
+										}
+									],
+									"cookie": [],
+									"body": "{\n    \"Success\": true,\n    \"Position\": {\n        \"username\": \"ranork\",\n        \"id\": 9,\n        \"active\": true,\n        \"walletid\": 9,\n        \"type\": \"LONG\",\n        \"startorder\": 0,\n        \"endorder\": 0,\n        \"market\": \"NASDAQ\",\n        \"symbol\": \"AAPL\",\n        \"totalusd\": 0,\n        \"totalstock\": 0,\n        \"createdate\": \"2022-04-05T21:11:35.000Z\",\n        \"isprivate\": false,\n        \"explanation\": \"Test Position\",\n        \"finishpnl\": null,\n        \"buyordershare\": 0,\n        \"buyorderusd\": 0,\n        \"sellordershare\": 0,\n        \"sellorderusd\": 0\n    }\n}"
+								}
+							]
+						},
+						{
+							"name": "POSITION",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"id\": 9\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "127.0.0.1:919/function/position/",
+									"host": [
+										"127",
+										"0",
+										"0",
+										"1"
+									],
+									"port": "919",
+									"path": [
+										"function",
+										"position",
+										""
+									]
+								}
+							},
+							"response": [
+								{
+									"name": "Example",
+									"originalRequest": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"id\": 9\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "127.0.0.1:919/function/position/",
+											"host": [
+												"127",
+												"0",
+												"0",
+												"1"
+											],
+											"port": "919",
+											"path": [
+												"function",
+												"position",
+												""
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "X-Powered-By",
+											"value": "Express"
+										},
+										{
+											"key": "Content-Type",
+											"value": "application/json; charset=utf-8"
+										},
+										{
+											"key": "Content-Length",
+											"value": "16"
+										},
+										{
+											"key": "ETag",
+											"value": "W/\"10-foaDisAQOmEN5f3bQmwvHr6wHkI\""
+										},
+										{
+											"key": "Date",
+											"value": "Tue, 05 Apr 2022 21:19:40 GMT"
 										},
 										{
 											"key": "Connection",

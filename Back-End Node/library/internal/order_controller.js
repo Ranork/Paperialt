@@ -34,7 +34,10 @@ async function controlOrders() {
     if (error) { console.log(error) }
 
     activeOrders = results.rows;
-    console.log("[" + (new Date()).stringer() + "] Order controller. Active Order Count: " + results.rowCount);
+
+    if (results.rowCount > 0) {
+      console.log("[" + (new Date()).stringer() + "] Order controller. Active Order Count: " + results.rowCount);
+    }
 
     for (var oi in activeOrders) {
       const order = activeOrders[oi];
@@ -156,5 +159,7 @@ async function deactivatePosition(posid, pnl) {
 
 module.exports = {
   controlOrders,
-  mainController
+  mainController,
+  deactivatePosition,
+  deactivateOrder
 }
