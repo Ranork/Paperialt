@@ -263,10 +263,12 @@
           <thead>
             <tr>
               <th scope="col">ID</th>
-              <th scope="col">Wallet</th>
+              <th scope="col">Expl.</th>
+              <th scope="col">Wal.</th>
               <th scope="col">Type</th>
               <th scope="col">Symbol</th>
               <th scope="col">Balance</th>
+              <th scope="col">Av. Bal.</th>
               <th scope="col">Private</th>
               <th scope="col">UPnL</th>
               <th scope="col">RPnL</th>
@@ -541,7 +543,7 @@ function fetchPositions() {
     if (pos.finishpnl == null) {pos.finishpnl = 0;}
 
     var upnl = 0;
-    if (pos.active) {
+    if (pos.active && pos.totalstock > 0) {
       var mprice = getStockQuote(pos.symbol).MarketPrice;
       var posprice = pos.totalusd / pos.totalstock;
 
@@ -553,11 +555,16 @@ function fetchPositions() {
       }
     }
 
+    var avgbal = 0;
+    if (pos.totalstock > 0) {avgbal = (pos.totalusd / pos.totalstock)}
+
     ht += '<td>' + pos.id + '</td>' +
+          '<td>' + pos.explanation + '</td>' +
           '<td>' + pos.walletid + '</td>' +
           '<td>' + pos.type + '</td>' +
           '<td>' + pos.market + ' : ' + pos.symbol + '</td>' +
           '<td>' + pos.totalstock.toFixed(2) + ' - ' + pos.totalusd.toFixed(2) + ' $' + '</td>' +
+          '<td>' + avgbal.toFixed(2) + ' $' + '</td>' +
           '<td>' + pos.isprivate + '</td>' +
           '<td>' + upnl.toFixed(2) + '</td>' +
           '<td>' + pos.finishpnl.toFixed(2) + '</td></tr>';

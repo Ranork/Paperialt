@@ -16,6 +16,7 @@ async function mainController() {
     if (Math.abs(now - lastControl) >= stgs.orderControlInterval) {
       lastControl = now;
       controlOrders();
+      con.pgcl_sync.connectSync(stgs.psqlstr);
     }
     await sleep(100);
   }
@@ -51,7 +52,7 @@ async function controlOrders() {
         }
         const tPrice = order.targetprice;
 
-        if (order.bs === 'BUY' && stprices.market <= tPrice) {
+        if (order.bs === 'BUY' && stprices.market <= tPrice && order.type == 'LIMIT') {
           // BUY MODE
           console.log("[ORD " + order.id + " POS " + order.position + "] Buy Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
@@ -59,7 +60,7 @@ async function controlOrders() {
                       " MarketPrice: " + stprices.market);
           triggerOrder(order.id, stprices)
         }
-        else if (order.bs === 'SELL' && stprices.market >= tPrice) {
+        else if (order.bs === 'SELL' && stprices.market >= tPrice && order.type == 'LIMIT') {
           // SELL MODE
           console.log("[ORD " + order.id + " POS " + order.position + "] Sell Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
