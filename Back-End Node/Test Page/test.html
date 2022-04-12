@@ -22,6 +22,7 @@
     body {
       background-color: var(--d1);
       color: var(--l2);
+      padding-bottom: 200px;
     }
 
     .navb {
@@ -30,6 +31,7 @@
       text-align: center;
       color: var(--l1);
       margin-bottom: 20px;
+      position: relative;
     }
 
     h1 {
@@ -134,6 +136,22 @@
       border-color: var(--l1);
     }
     
+    .geninfo {
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      bottom: 5px;
+      background-color: var(--d3);
+      padding: 10px;
+      color: var(--l3);
+      text-align: left;
+      font-size: 15px;
+    }
+
+    .geninfo span {
+      color: var(--l1);
+      font-weight: bold;
+    }
   </style>
 
 </head>
@@ -142,6 +160,10 @@
 <div class="container-fluid navb">
   <h1>Paperialt</h1>
   <div style="color: var(--l3); margin-top: -15px; padding-top: 0px;">Akatron Network</div>
+  <div class="geninfo">
+    U. PNL: <span id="gen_upnl">##</span> $<br>
+    R. PNL: <span id="gen_rpnl">##</span> $
+  </div>
 </div>
 
 <div class="container-fluid">
@@ -268,7 +290,7 @@
               <th scope="col">Type</th>
               <th scope="col">Symbol</th>
               <th scope="col">Balance</th>
-              <th scope="col">Av. Bal.</th>
+              <th scope="col">Av. Price</th>
               <th scope="col">Private</th>
               <th scope="col">UPnL</th>
               <th scope="col">RPnL</th>
@@ -322,6 +344,28 @@
 
         <div style="text-align: right; padding-bottom: 5px;">
           <button onclick="posPostSubmit()" type="button" class="btn btn-secondary">Submit</button>
+        </div>
+
+        <hr> <!-- PUT -->
+
+        <h3>
+          <i class="fa-solid fa-arrow-up-right-from-square"></i> 
+          PUT 
+          <span class="req_desc">Update position explanation</span>
+        </h3>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Position ID</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="pos_put_id">
+        </div>
+
+        <div class="input-group input-group-sm mb-2">
+          <span class="input-group-text" id="basic-addon1">Explanation</span>
+          <input type="text" class="form-control" aria-describedby="basic-addon1" id="pos_put_explanation">
+        </div>
+
+        <div style="text-align: right; padding-bottom: 5px;">
+          <button onclick="posPutSubmit()" type="button" class="btn btn-secondary">Submit</button>
         </div>
 
         <hr> <!-- DELETE -->
@@ -440,13 +484,113 @@
   </div>
 </div>
 
+<hr/>
+
+<div class="container-fluid">
+  <div class="row">
+    
+    <!-- STOCK HISTORY -->
+    <div class="col-12">
+      <div class="box">
+        <h2>Stock Details</h2>
+
+        <div class="row justify-content-center" style="margin-bottom: 30px;">
+          <div class="col" style="max-width: 400px; padding-top: 10px;">
+            <div class="input-group input-group-sm mb-2">
+              <span class="input-group-text" id="basic-addon1">Symbol</span>
+              <input type="text" class="form-control" aria-describedby="basic-addon1" id="st_history_symbol">
+              <button onclick="getStockQuoteTable(); getStockHistoryChart();" class="btn btn-secondary" type="button" id="button-addon2">Get</button>
+            </div>
+          </div>
+          <div class="col" style="max-width: 800px;">
+            <table class="table table-borderless table-sm">
+              <thead>
+                <tr>
+                  <th scope="col">Symbol</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Source</th>
+                  <th scope="col">Change</th>
+                  <th scope="col">Market Price</th>
+                </tr>
+              </thead>
+              <tbody id="quote_body">
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="chart"></div>
+        <div id="chart2"></div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
 
 
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+<script>
+  window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/promise-polyfill@8/dist/polyfill.min.js"><\/script>'
+    )
+  window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/eligrey-classlist-js-polyfill@1.2.20171210/classList.min.js"><\/script>'
+    )
+  window.Promise ||
+    document.write(
+      '<script src="https://cdn.jsdelivr.net/npm/findindex_polyfill_mdn"><\/script>'
+    )
+</script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+  window.Apex = {
+  chart: {
+    foreColor: '#ccc',
+    toolbar: {
+      show: true
+    },
+  },
+  stroke: {
+    width: 1
+  },
+  dataLabels: {
+    enabled: false
+  },
+  tooltip: {
+    theme: 'dark'
+  },
+  grid: {
+    borderColor: "#535A6C",
+    xaxis: {
+      lines: {
+        show: false
+      }
+    }
+  }
+};
 
+
+Date.prototype.stringer2 = function() {
+  var mm = this.getMonth() + 1; // getMonth() is zero-based
+  var dd = this.getDate();
+
+  var h = this.getHours();
+  var m = this.getMinutes();
+  var s = this.getSeconds();
+
+  return [
+          this.getFullYear(),
+          (mm>9 ? '' : '0') + mm,
+          (dd>9 ? '' : '0') + dd
+         ].join('-') + " ";
+};
+</script>
 <script>
 
 // STATIC --------------------------------------------------------------------------
@@ -501,6 +645,8 @@ function fetchWallets() {
 
   document.getElementById('wallet_count').innerText = walletdata.length;
 
+  var gen_rpnl = 0;
+
   for (var wi in walletdata) {
     var wal = walletdata[wi];
 
@@ -513,6 +659,8 @@ function fetchWallets() {
       }
     }
 
+    gen_rpnl += pnl;
+
     var ht =  '<tr><td>' + wal.id + '</td>' +
               '<td>' + wal.name + '</td>' +
               '<td>' + wal.explanation + '</td>' +
@@ -524,6 +672,8 @@ function fetchWallets() {
 
     walDiv.insertAdjacentHTML('beforeend', ht)
   }
+
+  document.getElementById("gen_rpnl").innerHTML = gen_rpnl.toFixed(2);
 }
 
 function fetchPositions() {
@@ -532,6 +682,8 @@ function fetchPositions() {
 
   var posData = syncFuncReq("GET", "position", {"order": "active desc, id asc"})['Data'];
   document.getElementById('position_count').innerText = posData.length;
+
+  var gen_upnl = 0;
 
   for (var pi in posData) {
     var pos = posData[pi];
@@ -555,6 +707,8 @@ function fetchPositions() {
       }
     }
 
+    gen_upnl += upnl;
+
     var avgbal = 0;
     if (pos.totalstock > 0) {avgbal = (pos.totalusd / pos.totalstock)}
 
@@ -563,14 +717,16 @@ function fetchPositions() {
           '<td>' + pos.walletid + '</td>' +
           '<td>' + pos.type + '</td>' +
           '<td>' + pos.market + ' : ' + pos.symbol + '</td>' +
-          '<td>' + pos.totalstock.toFixed(2) + ' - ' + pos.totalusd.toFixed(2) + ' $' + '</td>' +
+          '<td>' + pos.totalstock.toFixed(2) + ' - ' + pos.totalusd.toFixed(2) + ' $</td>' +
           '<td>' + avgbal.toFixed(2) + ' $' + '</td>' +
           '<td>' + pos.isprivate + '</td>' +
-          '<td>' + upnl.toFixed(2) + '</td>' +
-          '<td>' + pos.finishpnl.toFixed(2) + '</td></tr>';
+          '<td style="font-weight: bold;">' + upnl.toFixed(2) + ' $</td>' +
+          '<td>' + pos.finishpnl.toFixed(2) + ' $</td></tr>';
     
     posDiv.insertAdjacentHTML('beforeend', ht);
   }
+
+  document.getElementById("gen_upnl").innerText = gen_upnl.toFixed(2);
 }
 
 function fetchOrders() {
@@ -737,6 +893,21 @@ function posDeleteSubmit() {
   document.getElementById('pos_delete_id').value = "";
 }
 
+function posPutSubmit() {
+  console.log("PUT REQUEST - POSITION");
+  var sendData = {
+    "id": document.getElementById('pos_put_id').value,
+    "explanation": document.getElementById('pos_put_explanation').value
+  }
+
+  var ans = syncFuncReq("PUT", "position", sendData);
+
+  console.log(ans);
+  fetchPositions();
+  document.getElementById('pos_put_id').value = "";
+  document.getElementById('pos_put_explanation').value = "";
+}
+
 // Order
 
 function ordPostGet() {
@@ -790,6 +961,124 @@ function ordDeleteSubmit() {
   console.log(ans);
   fetchOrders();
   document.getElementById('ord_delete_id').value = "";
+}
+
+// STOCK FUNCTIONS --------------------------------------------------------------------
+
+// Quote
+
+function getStockQuoteTable() {
+  console.log("GET REQUEST - STOCK_QUOTE");
+
+  var symbol = document.getElementById('st_history_symbol').value;
+  if (symbol.length <= 0) {
+    return;
+  }
+
+  var stdata = syncFuncReq('GET', 'stock_quote', {"symbol": symbol});
+  console.log(stdata);
+
+  var ht = "<tr>";
+  
+  ht += '<td>' + symbol + '</td>' +
+        '<td>' + stdata.ShortName + '</td>' +
+        '<td>' + stdata.Source + '</td>' +
+        '<td>' + stdata.Change.toFixed(2) + ' $ (%' + stdata.ChangePercent.toFixed(2) + ')' + '</td>' +
+        '<td style="text-align: right; font-weight: bold;">' + stdata.MarketPrice + ' $</td>';
+  
+
+  document.getElementById('quote_body').innerHTML = ht;
+  
+}
+
+// History
+
+function getStockHistoryChart() {
+  console.log("GET REQUEST - STOCK_HISTORY");
+
+  var symbol = document.getElementById('st_history_symbol').value;
+  if (symbol.length <= 0) {
+    return;
+  }
+
+  var hisdata = syncFuncReq("GET", "stock_history", {"symbol": symbol});
+  
+  if (hisdata.Success == false) {
+    alert("Symbol history not found!");
+    return;
+  }
+
+  var chart_data = [];
+  var vol_data = [];
+
+  var reordered = hisdata.Quotes.sort(function(a, b) {
+    return (new Date(a.date.replace("T", " ").replace("Z", ""))) - (new Date(b.date.replace("T", " ").replace("Z", "")));
+});
+
+  for (var n in reordered) {
+    var q = reordered[n];
+
+    var dt = (new Date(q.date.replace("T", " ").replace("Z", ""))).stringer2();
+    var vals = [q.open, q.high, q.low, q.close];
+
+    var vol = q.volume;
+
+    chart_data.push({
+      x: dt,
+      y: vals
+    });
+
+    vol_data.push({
+      x: dt,
+      y: vol
+    })
+  }
+
+  var opts = {
+    series: [{
+      data: chart_data
+    }],
+    chart: {
+      type: 'candlestick',
+      height: 600
+    },
+    title: {
+      text: symbol + " Prices",
+      align: 'center'
+    },
+    xaxis: {
+      type: 'category'
+    },
+    yaxis: {
+      tooltip: {
+        enabled: true
+      }
+    }
+  };
+
+  var vol_opts = {
+    series: [{
+      name: "Volume",
+      data: vol_data
+    }],
+    chart: {
+      type: 'bar',
+      height: 350
+    },
+    title: {
+      text: symbol + " Volume",
+      align: 'center'
+    },
+  }
+
+  document.querySelector("#chart").innerHTML = "";
+  var chart = new ApexCharts(document.querySelector("#chart"), opts);
+  chart.render();
+  
+  document.querySelector("#chart2").innerHTML = "";
+  var chart2 = new ApexCharts(document.querySelector("#chart2"), vol_opts);
+  chart2.render();
+
 }
 
 </script>

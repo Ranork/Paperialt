@@ -90,6 +90,38 @@ function fPOST(req, res) {
 
 }
 
+function fPUT(req, res) {
+  const body = req.body;
+  var token = req.get('Token');
+  var userdata = stgs.authTokens[token];
+  
+  var reqfields = [
+    "id", "explanation"
+  ];
+
+  for (var ri in reqfields) {
+    var rfield = reqfields[ri];
+    if (!body.hasOwnProperty(rfield)) { return res.status(400).json({"Success": false, "Error": rfield + " not found in body."}); }
+  }
+
+  var posid = body['id'];
+  var expl = body['explanation'];
+
+  var upsql = {
+    "conditions": "id = '" + posid + "'",
+    "values": {
+      "explanation": expl
+    }
+  }
+
+  con.pool.query(tblPos.CUpdate(upsql), (error, results) => {
+    if (error) { return res.status(500).json({"Success": false, "Error": error}) }
+
+    return res.status(200).json({"Success": true})
+
+  });
+
+}
 
 function fDELETE(req, res) {
   const body = req.body;
@@ -121,6 +153,10 @@ const functionModule = {
       "function": fPOST,
       "permLevel": 0
     },
+    "PUT": {
+      "function": fPUT,
+      "permLevel": 0
+    },
     "DELETE": {
       "function": fDELETE,
       "permLevel": 0
@@ -135,6 +171,11 @@ const functionModule = {
     "POST": {
       "info": "Create new position.",
       "params": ["*walletid", "*type: LONG, SHORT", "*market: NASDAQ, BINANCE", "*symbol", "isprivate", "explanation"],
+      "returns": ["Data", "RowCount"]
+    },
+    "PUT": {
+      "info": "Update position explanation",
+      "params": ["*id", "explanation"],
       "returns": ["Data", "RowCount"]
     },
     "DELETE": {

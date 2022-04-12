@@ -52,7 +52,7 @@ async function controlOrders() {
         }
         const tPrice = order.targetprice;
 
-        if (order.bs === 'BUY' && stprices.market <= tPrice && order.type == 'LIMIT') {
+        if ((order.bs === 'BUY' && stprices.market <= tPrice) || order.type == 'MARKET') {
           // BUY MODE
           console.log("[ORD " + order.id + " POS " + order.position + "] Buy Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
@@ -60,7 +60,7 @@ async function controlOrders() {
                       " MarketPrice: " + stprices.market);
           triggerOrder(order.id, stprices)
         }
-        else if (order.bs === 'SELL' && stprices.market >= tPrice && order.type == 'LIMIT') {
+        else if ((order.bs === 'SELL' && stprices.market >= tPrice) || order.type == 'MARKET') {
           // SELL MODE
           console.log("[ORD " + order.id + " POS " + order.position + "] Sell Order Triggered. Type: " + order.type + 
                       " Sym: " + order.symbol + 
@@ -82,6 +82,10 @@ async function triggerOrder(orderid, stockprices) {
   const pos = tblPos.SQSelectOne(order.position);
   const wallet = tblWallet.SQSelectOne(order.wallet);
 
+  if (order.type == 'TAKEPROFIT' || order.type == 'STOPLOSS') {
+    order.amount = pos.totalstock;
+  }
+  
   deactivateOrder(orderid);
 
   var occuredPayment = (order.amount * stockprices.market);
